@@ -1,4 +1,4 @@
-package de.deminosa.lobby.main;
+package de.deminosa.lobby.main.listeners;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect.Type;

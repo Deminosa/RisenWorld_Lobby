@@ -3,7 +3,8 @@ package de.deminosa.lobby.regedit;
 import org.bukkit.event.Listener;
 
 import de.deminosa.lobby.RisenWorld_Lobby;
-import de.deminosa.lobby.main.Join;
+import de.deminosa.lobby.main.listeners.Join;
+import de.deminosa.lobby.main.listeners.secure.BlockedListeners;
 
 /*
 *	Class Create by Deminosa
@@ -17,6 +18,7 @@ public class Toroku {
 
 	public static void init() {
 		addEvent(new Join());
+		addEvent(new BlockedListeners());
 	}
 	
 	private static void addEvent(Listener listener) {
