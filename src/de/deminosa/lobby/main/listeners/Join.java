@@ -5,6 +5,7 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.deminosa.lobby.utils.rocket.RocketBuilder;
 
@@ -23,6 +24,11 @@ public class Join implements Listener{
 		event.setJoinMessage("");
 		RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
 		builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 3);
+	}
+	
+	@EventHandler
+	public void onQuit(PlayerQuitEvent event) {
+		event.setQuitMessage("");
 	}
 	
 }
