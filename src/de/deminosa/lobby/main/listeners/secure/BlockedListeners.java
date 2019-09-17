@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -59,6 +60,11 @@ public class BlockedListeners implements Listener{
 	}
 	
 	@EventHandler
+	public void onInventoryClickEvent(InventoryClickEvent event){
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
 		event.setCancelled(true);
 	}
@@ -66,10 +72,5 @@ public class BlockedListeners implements Listener{
 	@EventHandler
 	public void onEntityDamageByBlock(EntityDamageByBlockEvent event){
 		event.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onJumpedOnBlock() {
-		
 	}
 }

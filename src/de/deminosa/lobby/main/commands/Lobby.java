@@ -13,6 +13,8 @@ import de.deminosa.core.builders.command.CoreCommand;
 
 public class Lobby implements CoreCommand{
 
+	private final String prefix = "Emmy";
+	
 	@Override
 	public String command() {
 		return "emmy";
@@ -35,7 +37,12 @@ public class Lobby implements CoreCommand{
 
 	@Override
 	public void run(CorePlayer player, String[] args) {
-		
+		if(args.length == 1) {
+			player.sendMessage(prefix, "§c/emmy <args>");
+			player.sendMessage(prefix, "§7     args     |     alias     |     beschreibung");
+			player.sendMessage(prefix, "§7");
+			player.sendMessage(prefix, "§6test §8| §6-t §8| §7joa, warum nicht.");
+		}
 	}
 
 	@Override
