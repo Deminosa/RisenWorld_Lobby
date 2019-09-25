@@ -2,6 +2,7 @@ package de.deminosa.lobby.main.commands;
 
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.command.CoreCommand;
+import de.deminosa.core.utils.warps.WarpManager;
 
 /*
 *	Class Create by Deminosa
@@ -42,12 +43,27 @@ public class Lobby implements CoreCommand{
 			player.sendMessage(prefix, "§7     args     |     alias     |     beschreibung");
 			player.sendMessage(prefix, "§7");
 			player.sendMessage(prefix, "§6test §8| §6-t §8| §7joa, warum nicht.");
+			player.sendMessage(prefix, "§6setSpawn §8| §6- §8| §7Setze den Spawn!");
+		}else if(args.length == 2) {
+			if(args[1].equalsIgnoreCase("setSpawn")) {
+				if(WarpManager.getWarpLocation("spawn") == null) {
+					WarpManager.createWarp(player, "setSpawn");
+				}else {
+					player.sendMessage(prefix, "§cDer Spawn konnte nicht gesetzt werden!\n"
+							+ "§7Um die Position zu ändern, Lösche zu erst die datei spawn.yml");
+				}
+			}else if(args[1].equalsIgnoreCase("test") || args[1].equalsIgnoreCase("-t")) {
+				player.sendMessage(prefix, "joa, warum nicht.");
+			}
+		}else {
+			
 		}
 	}
 
 	@Override
-	public boolean runNoPerms(CorePlayer arg0, String[] arg1) {
-		return false;
+	public boolean runNoPerms(CorePlayer player, String[] arg1) {
+		player.sendMessage(prefix, "joa, warum nicht.");
+		return true;
 	}
 
 }
