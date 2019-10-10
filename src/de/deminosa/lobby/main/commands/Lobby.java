@@ -44,16 +44,20 @@ public class Lobby implements CoreCommand{
 			player.sendMessage(prefix, "§7");
 			player.sendMessage(prefix, "§6test §8| §6-t §8| §7joa, warum nicht.");
 			player.sendMessage(prefix, "§6setSpawn §8| §6- §8| §7Setze den Spawn!");
+			player.sendMessage(prefix, "§6setKnockFFA §8| §6- §8| §7Setze den KnockFFA Warp!");
+			player.sendMessage(prefix, "§6setSkyPvP §8| §6- §8| §7Setze den SkyPvP Warp!");
 		}else if(args.length == 2) {
 			if(args[1].equalsIgnoreCase("setSpawn")) {
-				if(WarpManager.getWarpLocation("spawn") == null) {
-					WarpManager.createWarp(player, "setSpawn");
-				}else {
-					player.sendMessage(prefix, "§cDer Spawn konnte nicht gesetzt werden!\n"
-							+ "§7Um die Position zu ändern, Lösche zu erst die datei spawn.yml");
-				}
+				WarpManager.createWarp(player, "spawn");
+				player.sendMessage(prefix, "§aSpawn Set/Change!");
 			}else if(args[1].equalsIgnoreCase("test") || args[1].equalsIgnoreCase("-t")) {
 				player.sendMessage(prefix, "joa, warum nicht.");
+			}else if(args[1].equalsIgnoreCase("setKnockFFA")) {
+				WarpManager.createWarp(player, "KnockFFA");
+				player.sendMessage(prefix, "§aKnockFFA Set/Change!");
+			}else if(args[1].equalsIgnoreCase("setSkyPvP")) {
+				WarpManager.createWarp(player, "SkyPvP");
+				player.sendMessage(prefix, "§aSkyPvP Set/Change!");
 			}
 		}else {
 			

@@ -7,8 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.core.utils.warps.WarpManager;
+import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.utils.Utils;
 import de.deminosa.lobby.utils.rocket.RocketBuilder;
 
@@ -26,15 +28,17 @@ public class Join implements Listener{
 	public void onJoin(PlayerJoinEvent event) {
 		event.setJoinMessage("");
 		
-		if(WarpManager.getWarpLocation("spawn") != null) {
-			event.getPlayer().teleport(WarpManager.getWarpLocation("spawn"));
-		}else {
-			event.getPlayer().sendMessage("§cLOC IS NUL");
-		}
+		event.getPlayer().teleport(WarpManager.getWarpLocation("spawn"));
 		
-		RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
-		builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
-		getItems(event.getPlayer());
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
+				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
+				getItems(event.getPlayer());
+			}
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2);
 	}
 	
 	@EventHandler
