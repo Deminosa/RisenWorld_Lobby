@@ -43,8 +43,7 @@ public class InfoActionbar implements CoreTimer{
 	}
 
 	String[] info = {"Willkommen, §e%player%",
-			"KnockFFA ist nun verfügbar!",
-			"Bedwars braucht länger als Geplant. BW wurde auf ??.??.19 Verschoben",
+			"KnockFFA & AdvancedSkyPvP sind nun verfügbar!",
 			"Ich bin ein Sinnloser Text!"};
 
 	private String IndexBuilder() {

@@ -35,7 +35,7 @@ public class Games implements Listener{
 			GUI gui = new GUI(player, "§6Games", 54-9);
 			
 			gui.setButton(4, new GUIButton() {
-				String warp = "";
+				String warp = "SkyPvP";
 				@Override
 				public void onClick(InventoryClickEvent event) {
 					player.getBukkitPlayer().closeInventory();
@@ -46,7 +46,7 @@ public class Games implements Listener{
 				
 				@Override
 				public ItemStack getIcon() {
-					return new ItemBuilder(Material.BARRIER).setName("§6"+warp).build();
+					return new ItemBuilder(Material.GRASS).setName("§6"+warp).build();
 				}
 			});
 			

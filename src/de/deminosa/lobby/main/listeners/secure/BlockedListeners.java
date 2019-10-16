@@ -12,6 +12,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import de.deminosa.lobby.RisenWorld_Lobby;
 
 /*
 *	Class Create by Deminosa
@@ -25,8 +28,13 @@ public class BlockedListeners implements Listener{
 
 	@EventHandler
 	public void onWeatherChangeEvent(WeatherChangeEvent event) {
-		event.getWorld().setStorm(false);
-		event.getWorld().setThundering(false);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				event.getWorld().setStorm(false);
+				event.getWorld().setThundering(false);
+			}
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20);
 	}
 	
 	@EventHandler
