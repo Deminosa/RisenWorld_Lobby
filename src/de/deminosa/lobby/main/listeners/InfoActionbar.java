@@ -7,6 +7,7 @@ import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.CoreTimer;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.lobby.utils.Utils;
+import jump.Jump;
 
 /*
  *	Class Create by Deminosa
@@ -25,11 +26,13 @@ public class InfoActionbar implements CoreTimer{
 		Bukkit.getOnlinePlayers().forEach((bukkitPlayer) ->{
 			CorePlayer player = CoreCache.getCorePlayer(bukkitPlayer);
 
-			player.
-			sendActionbar(IndexBuilder() + 
-					" §6" + info[index].replace("%player%", bukkitPlayer.getName()) 
-					+ " " + 
-					IndexBuilder());
+			if(!Jump.sucBlocks.containsKey(player.getBukkitPlayer())) {
+				player.
+				sendActionbar(IndexBuilder() + 
+						" §6" + info[index].replace("%player%", bukkitPlayer.getName()) 
+						+ " " + 
+						IndexBuilder());
+			}
 		});
 		t++;
 		if(Core.getInstance().isDebug()) Bukkit.broadcastMessage("["+index+"] §a"+ (t/20) + "/" + getTimes() + "");
@@ -47,11 +50,11 @@ public class InfoActionbar implements CoreTimer{
 			"Ich bin ein Sinnloser Text!"};
 
 	private String IndexBuilder() {
-		String s = "§8● ";
+		String s = "§8●";
 		String builder = "";
 		for(int i = 0; i < info.length; i++) {
 			if(i == index) {
-				builder += "§b● ";
+				builder += "§b●";
 			}else {
 				builder = builder + s;
 			}
@@ -60,7 +63,7 @@ public class InfoActionbar implements CoreTimer{
 	}
 	
 	private int getTimes() {
-		int i = (info[index].length() * 2)/3;
+		int i = (info[index].replaceAll(" ", "").length() * 2)/3;
 		return i;
 	}
 }

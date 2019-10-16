@@ -16,6 +16,7 @@ import de.deminosa.core.utils.gui.GUIButton;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.utils.Utils;
+import jump.Jump;
 
 /*
 *	Class Create by Deminosa
@@ -29,6 +30,14 @@ public class Games implements Listener{
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
+		if(event.getItem().equals(Utils.getJUMP())) {
+			if(!Jump.sucBlocks.containsKey(event.getPlayer())) {
+				Jump.start(event.getPlayer());
+			}else {
+				CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
+				player.sendMessage("§bEmmy", "§cJ'n'R Konnte nicht gestartet werden!");
+			}
+		}
 		if(event.getItem().equals(Utils.getGAMES())) {
 			CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
 			

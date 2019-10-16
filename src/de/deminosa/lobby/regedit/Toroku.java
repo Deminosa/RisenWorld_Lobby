@@ -34,4 +34,5 @@ public class Toroku {
 		RisenWorld_Lobby.getInstance().getServer().getPluginManager().registerEvents(listener, RisenWorld_Lobby.getInstance());
 	}
 	
+	
 }
