@@ -9,10 +9,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.deminosa.coinmanager.Coins;
+import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.utils.Utils;
 import de.deminosa.lobby.utils.rocket.RocketBuilder;
+import jump.JumpEndEvent;
 
 /*
 *	Class Create by Deminosa
@@ -50,6 +53,15 @@ public class Join implements Listener{
 		player.getInventory().setItem(0, Utils.getGAMES());
 		player.getInventory().setItem(4, Utils.getSHOP());
 		player.getInventory().setItem(8, Utils.getJUMP());
+	}
+	
+	@EventHandler
+	public void JumpEnd(JumpEndEvent event) {
+		int block = event.getJumpedBlocks();
+		
+		int coins = block/5;
+		Coins.action(CoinAction.ADD, event.getPlayer(), coins);
+		event.setMessage("§9Coins §7Du hast §6" + coins + " coin(s) §7bekommen für §6"+block+" Blöcke§7!");
 	}
 	
 }
