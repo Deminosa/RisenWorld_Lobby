@@ -16,6 +16,7 @@ import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.agb.AGB;
+import de.deminosa.lobby.utils.GameChange;
 import de.deminosa.lobby.utils.Utils;
 import de.deminosa.lobby.utils.rocket.RocketBuilder;
 import jump.JumpEndEvent;
@@ -40,9 +41,10 @@ public class Join implements Listener{
 			
 			@Override
 			public void run() {
-//				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
-//				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
+				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
+				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
 				getItems(event.getPlayer());
+				GameChange.sendGameState(event.getPlayer(), 3, -1);
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2);
 	}
