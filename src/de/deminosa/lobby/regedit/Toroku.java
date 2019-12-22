@@ -12,7 +12,7 @@ import de.deminosa.lobby.main.commands.Lobby;
 import de.deminosa.lobby.main.listeners.InfoActionbar;
 import de.deminosa.lobby.main.listeners.Join;
 import de.deminosa.lobby.main.listeners.LobbyItems.Games;
-import de.deminosa.lobby.main.listeners.LobbyItems.Shop;
+import de.deminosa.lobby.main.listeners.LobbyItems.ShopListener;
 import de.deminosa.lobby.main.listeners.secure.BlockedListeners;
 
 /*
@@ -31,7 +31,7 @@ public class Toroku {
 		addEvent(new Join());
 		addEvent(new BlockedListeners());
 		addEvent(new Games());
-		addEvent(new Shop());
+		addEvent(new ShopListener());
 		
 		MySQLcon();
 		

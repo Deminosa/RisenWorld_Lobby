@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.cache.CoreCache;
+import de.deminosa.lobby.main.shop.Shop;
 import de.deminosa.lobby.regedit.Toroku;
 import de.deminosa.lobby.utils.Utils;
 
@@ -18,7 +19,7 @@ import de.deminosa.lobby.utils.Utils;
 *
 */
 
-public class Shop implements Listener{
+public class ShopListener implements Listener{
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
@@ -33,6 +34,7 @@ public class Shop implements Listener{
 				player.sendMessage(Toroku.PREFIX, "§7Wird bestätigt...");
 				if(event.getPlayer().getName().equals("Deminosa")) {
 					player.sendMessage(Toroku.PREFIX, "§aBestätigt.");
+					Shop.init(player);
 				}else {
 					player.sendMessage(Toroku.PREFIX, "§cAbgelehnt!");
 				}
