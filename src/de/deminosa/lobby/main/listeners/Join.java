@@ -38,7 +38,6 @@ public class Join implements Listener{
 		event.getPlayer().teleport(WarpManager.getWarpLocation("spawn"));
 		
 		new BukkitRunnable() {
-			
 			@Override
 			public void run() {
 				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
