@@ -65,7 +65,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -78,7 +80,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -91,7 +95,9 @@ public class Games implements Listener{
 				@Override
 				public void onClick(InventoryClickEvent event) {
 					String warp = "KnockFFA";
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -104,7 +110,9 @@ public class Games implements Listener{
 				@Override
 				public void onClick(InventoryClickEvent event) {
 					String warp = "spawn";
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -117,7 +125,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -130,7 +140,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -143,7 +155,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override
@@ -156,7 +170,9 @@ public class Games implements Listener{
 				String warp = "";
 				@Override
 				public void onClick(InventoryClickEvent event) {
-					teleport(player, warp);
+					if(!warp.equalsIgnoreCase("")) {
+						teleport(player, warp);
+					}
 				}
 				
 				@Override

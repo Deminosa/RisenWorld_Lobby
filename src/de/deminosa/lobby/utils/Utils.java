@@ -24,7 +24,7 @@ public class Utils {
 	}
 	
 	public static ItemStack getJUMP() {
-		return new ItemBuilder(Material.BEACON).setName("§b➤ §6Run and Jump").build();
+		return new ItemBuilder(Material.BEACON).setName("§b➤ §6J'n'R").build();
 	}
 	
 }

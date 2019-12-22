@@ -1,8 +1,12 @@
 package de.deminosa.lobby.main.commands;
 
+import org.bukkit.Bukkit;
+
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.command.CoreCommand;
+import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.core.utils.warps.WarpManager;
+import de.deminosa.lobby.utils.GameChange;
 
 /*
 *	Class Create by Deminosa
@@ -46,21 +50,27 @@ public class Lobby implements CoreCommand{
 			player.sendMessage(prefix, "§6setSpawn §8| §6- §8| §7Setze den Spawn!");
 			player.sendMessage(prefix, "§6setKnockFFA §8| §6- §8| §7Setze den KnockFFA Warp!");
 			player.sendMessage(prefix, "§6setSkyPvP §8| §6- §8| §7Setze den SkyPvP Warp!");
+			player.sendMessage(prefix, "§6AGBReset §8| §6- §8| §7Reset AGB");
 		}else if(args.length == 2) {
 			if(args[1].equalsIgnoreCase("setSpawn")) {
 				WarpManager.createWarp(player, "spawn");
 				player.sendMessage(prefix, "§aSpawn Set/Change!");
 			}else if(args[1].equalsIgnoreCase("test") || args[1].equalsIgnoreCase("-t")) {
-				player.sendMessage(prefix, "joa, warum nicht.");
+				// https://www.spigotmc.org/threads/tutorial-gamestatechange-packet.143852/
+				
 			}else if(args[1].equalsIgnoreCase("setKnockFFA")) {
 				WarpManager.createWarp(player, "KnockFFA");
 				player.sendMessage(prefix, "§aKnockFFA Set/Change!");
 			}else if(args[1].equalsIgnoreCase("setSkyPvP")) {
 				WarpManager.createWarp(player, "SkyPvP");
 				player.sendMessage(prefix, "§aSkyPvP Set/Change!");
+			}else if(args[1].equalsIgnoreCase("AGBReset")) {
+				player.sendMessage(prefix, "§7Wird Gelöscht...");
+				MySQL.deleteRow("AGB", "UUID", player.getBukkitPlayer().getUniqueId().toString());
+				player.sendMessage(prefix, "§7Gelöscht!");
 			}
 		}else {
-			
+			GameChange.sendGameState(Bukkit.getPlayer(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]));
 		}
 	}
 

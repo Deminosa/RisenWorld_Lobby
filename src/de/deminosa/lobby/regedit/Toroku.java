@@ -4,6 +4,8 @@ import org.bukkit.event.Listener;
 
 import de.deminosa.core.Core;
 import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.utils.mysql.ColumType;
+import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.border.LobbyBorder;
 import de.deminosa.lobby.main.commands.Lobby;
@@ -31,6 +33,8 @@ public class Toroku {
 		addEvent(new Games());
 		addEvent(new Shop());
 		
+		MySQLcon();
+		
 		Core.getInstance().registerCommand(new Lobby());
 		CoreCache.regCoreTimer(new InfoActionbar());
 		LobbyBorder.setWorldBoarder();
@@ -38,6 +42,16 @@ public class Toroku {
 	
 	private static void addEvent(Listener listener) {
 		RisenWorld_Lobby.getInstance().getServer().getPluginManager().registerEvents(listener, RisenWorld_Lobby.getInstance());
+	}
+	
+	private static void MySQLcon() {
+		String[] colum = {"UUID", "allow"};
+		ColumType[] type = {ColumType.VARCHAR_128, ColumType.VARCHAR_32};
+		MySQL.createTable("AGB", colum, type);
+		
+		String[] reedemColum = {"ID", "UUID", "UID", "Action", "arguments"};
+		ColumType[] reedemType = {ColumType.INT, ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.VARCHAR_32, ColumType.VARCHAR_2048};
+		MySQL.createTable("Reedem", reedemColum, reedemType);
 	}
 	
 	

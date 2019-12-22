@@ -3,3 +3,5 @@ author: Deminosa
 main: de.deminosa.lobby.RisenWorld_Lobby
 version: v0.1
 api-version: 1.8.8
+load: STARTUP
+prefix: Core

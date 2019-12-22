@@ -5,7 +5,9 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,6 +15,7 @@ import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
+import de.deminosa.lobby.main.agb.AGB;
 import de.deminosa.lobby.utils.Utils;
 import de.deminosa.lobby.utils.rocket.RocketBuilder;
 import jump.JumpEndEvent;
@@ -37,11 +40,26 @@ public class Join implements Listener{
 			
 			@Override
 			public void run() {
-				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
-				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
+//				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
+//				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
 				getItems(event.getPlayer());
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2);
+	}
+	
+	@EventHandler
+	public void onMove(PlayerMoveEvent event) {
+		AGB.open(event.getPlayer());
+	}
+	
+	@EventHandler
+	public void onMove(InventoryCloseEvent event) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				AGB.open((Player)event.getPlayer());
+			}
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 40);
 	}
 	
 	@EventHandler
