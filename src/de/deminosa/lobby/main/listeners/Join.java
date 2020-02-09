@@ -2,10 +2,13 @@ package de.deminosa.lobby.main.listeners;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect.Type;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -13,6 +16,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
+import de.deminosa.core.builders.CorePlayer;
+import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.agb.AGB;
@@ -40,12 +46,18 @@ public class Join implements Listener{
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
-				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
+//				RocketBuilder builder = new RocketBuilder(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation());
+//				builder.build(false, true, Type.BALL_LARGE, Color.BLUE, Color.AQUA, 1);
 				getItems(event.getPlayer());
 				GameChange.sendGameState(event.getPlayer(), 3, -1);
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2);
+	}
+	
+	@EventHandler
+	public void ItemHolder(PlayerItemHeldEvent event) {
+		CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
+		player.playsound(Sound.CLICK);
 	}
 	
 	@EventHandler
@@ -70,7 +82,9 @@ public class Join implements Listener{
 	
 	private void getItems(Player player) {
 		player.getInventory().setItem(0, Utils.getGAMES());
-		player.getInventory().setItem(4, Utils.getSHOP());
+		player.getInventory().setItem(2, Utils.getSHOP());
+		player.getInventory().setItem(4, new ItemBuilder(Material.BARRIER).setName("§c§lDemnächst").build());
+		player.getInventory().setItem(6, Utils.getEVENT());
 		player.getInventory().setItem(8, Utils.getJUMP());
 	}
 	

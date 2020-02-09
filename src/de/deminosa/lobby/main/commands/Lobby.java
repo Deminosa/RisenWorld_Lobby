@@ -68,6 +68,18 @@ public class Lobby implements CoreCommand{
 				player.sendMessage(prefix, "§7Wird Gelöscht...");
 				MySQL.deleteRow("AGB", "UUID", player.getBukkitPlayer().getUniqueId().toString());
 				player.sendMessage(prefix, "§7Gelöscht!");
+			}else if(args[1].equalsIgnoreCase("setTNTRun")) {
+				WarpManager.createWarp(player, "TNT-Run");
+				player.sendMessage(prefix, "§aTNT Run Set/Change!");
+			}else if(args[1].equalsIgnoreCase("setSkyBlock")) {
+				WarpManager.createWarp(player, "SkyBlock");
+				player.sendMessage(prefix, "§aSkyBlock Set/Change!");
+			}else if(args[1].equalsIgnoreCase("setUHC")) {
+				WarpManager.createWarp(player, "UHC");
+				player.sendMessage(prefix, "§aUHC Set/Change!");
+			}else if(args[1].equalsIgnoreCase("setJL")) {
+				WarpManager.createWarp(player, "JL");
+				player.sendMessage(prefix, "§aJL Set/Change!");
 			}
 		}else {
 			GameChange.sendGameState(Bukkit.getPlayer(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]));

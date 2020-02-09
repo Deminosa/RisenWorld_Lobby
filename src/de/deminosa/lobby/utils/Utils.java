@@ -1,9 +1,14 @@
 package de.deminosa.lobby.utils;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
+import de.deminosa.lobby.RisenWorld_Lobby;
 
 /*
 *	Class Create by Deminosa
@@ -27,4 +32,16 @@ public class Utils {
 		return new ItemBuilder(Material.BEACON).setName("§b➤ §6J'n'R").build();
 	}
 	
+	public static ItemStack getEVENT() {
+		return new ItemBuilder(Material.NETHER_STAR).setName("§b➤ §6Event Server").build();
+	}
+	
+	
+	public static void connectTo(Player player, String Server) {
+		player.sendMessage("§7Connecting....");
+		ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(Server);
+        player.sendPluginMessage(RisenWorld_Lobby.getInstance(), "BungeeCord", out.toByteArray());
+	}
 }

@@ -14,8 +14,10 @@ import org.bukkit.inventory.ItemStack;
 public interface ShopItemBuilder {
 
 	public int getPrice();
+	public String getItemName();
 	public ItemStack getItem(Player player);
 	public ItemStack getIcon();
+	public int getItemID();
 	public int getSlot();
 	public int getItemLevel();
 	

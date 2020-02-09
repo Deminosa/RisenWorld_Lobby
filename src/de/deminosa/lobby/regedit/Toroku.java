@@ -14,6 +14,7 @@ import de.deminosa.lobby.main.listeners.Join;
 import de.deminosa.lobby.main.listeners.LobbyItems.Games;
 import de.deminosa.lobby.main.listeners.LobbyItems.ShopListener;
 import de.deminosa.lobby.main.listeners.secure.BlockedListeners;
+import de.deminosa.lobby.main.timers.ParticelTimer;
 
 /*
 *	Class Create by Deminosa
@@ -36,7 +37,8 @@ public class Toroku {
 		MySQLcon();
 		
 		Core.getInstance().registerCommand(new Lobby());
-		CoreCache.regCoreTimer(new InfoActionbar());
+		CoreCache.regCoreTimer(new ParticelTimer());
+//		CoreCache.regCoreTimer(new InfoActionbar());
 		LobbyBorder.setWorldBoarder();
 	}
 	
@@ -48,6 +50,10 @@ public class Toroku {
 		String[] colum = {"UUID", "allow"};
 		ColumType[] type = {ColumType.VARCHAR_128, ColumType.VARCHAR_32};
 		MySQL.createTable("AGB", colum, type);
+		
+		String[] ShopColum = {"UUID", "item", "amount"};
+		ColumType[] ShopType = {ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.INT};
+		MySQL.createTable("Shop", ShopColum, ShopType);
 		
 		String[] reedemColum = {"ID", "UUID", "UID", "Action", "arguments"};
 		ColumType[] reedemType = {ColumType.INT, ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.VARCHAR_32, ColumType.VARCHAR_2048};
