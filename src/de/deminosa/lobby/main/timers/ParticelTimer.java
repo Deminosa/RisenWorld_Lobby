@@ -39,7 +39,8 @@ public class ParticelTimer implements CoreTimer{
 			
 			for(Player player : Bukkit.getOnlinePlayers()) {
 				if(Jump.sucBlocks.containsKey(player)) {
-					CoreCache.getCorePlayer(player).sendTitle(0, 20, 5, "", "§b" + Jump.getJumpedBlocks(player)+" §6Jump's");
+					CoreCache.getCorePlayer(player)
+					.sendTitle(0, 20, 5, "", "§b" + Jump.getJumpedBlocks(player) + "§8/§b" + (Jump.getJumpedBlocks(player)/5));
 				}
 			}
 			

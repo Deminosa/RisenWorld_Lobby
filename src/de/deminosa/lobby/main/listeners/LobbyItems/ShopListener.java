@@ -34,17 +34,7 @@ public class ShopListener implements Listener{
 			if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
 
-				player.sendMessage(Toroku.PREFIX, "§cDer Shop wird gerade bearbeitet! \n§7Versuch es Später erneut!");
-			}else if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-				CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
-
-				player.sendMessage(Toroku.PREFIX, "§7Wird bestätigt...");
-				if(event.getPlayer().isOp()) {
-					player.sendMessage(Toroku.PREFIX, "§aBestätigt.");
-					Shop.openInit(player);
-				}else {
-					player.sendMessage(Toroku.PREFIX, "§cAbgelehnt!");
-				}
+				Shop.openInit(player);
 			}
 		}
 	}

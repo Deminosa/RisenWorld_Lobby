@@ -1,6 +1,7 @@
 package de.deminosa.lobby.utils;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,6 +31,11 @@ public class Utils {
 	
 	public static ItemStack getJUMP() {
 		return new ItemBuilder(Material.BEACON).setName("§b➤ §6J'n'R").build();
+	}
+	
+	public static ItemStack getREWARD() {
+		return new ItemBuilder(Material.SPECKLED_MELON).setName("§b➤ §6Belohnungen")
+				.addUnsafeEnchantment(Enchantment.LUCK, 0).build();
 	}
 	
 	public static ItemStack getEVENT() {

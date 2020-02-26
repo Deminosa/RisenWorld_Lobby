@@ -82,10 +82,10 @@ public class Join implements Listener{
 	
 	private void getItems(Player player) {
 		player.getInventory().setItem(0, Utils.getGAMES());
-		player.getInventory().setItem(2, Utils.getSHOP());
-		player.getInventory().setItem(4, new ItemBuilder(Material.BARRIER).setName("§c§lDemnächst").build());
-		player.getInventory().setItem(6, Utils.getEVENT());
-		player.getInventory().setItem(8, Utils.getJUMP());
+		player.getInventory().setItem(1, Utils.getJUMP());
+		player.getInventory().setItem(4, Utils.getREWARD());
+		player.getInventory().setItem(7, new ItemBuilder(Material.BARRIER).setName("§c§lDemnächst").build());
+		player.getInventory().setItem(8, Utils.getSHOP());
 	}
 	
 	@EventHandler

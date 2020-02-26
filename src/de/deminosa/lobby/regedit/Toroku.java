@@ -13,7 +13,9 @@ import de.deminosa.lobby.main.listeners.InfoActionbar;
 import de.deminosa.lobby.main.listeners.Join;
 import de.deminosa.lobby.main.listeners.LobbyItems.Games;
 import de.deminosa.lobby.main.listeners.LobbyItems.ShopListener;
+import de.deminosa.lobby.main.listeners.players.PlayerInteractHandler;
 import de.deminosa.lobby.main.listeners.secure.BlockedListeners;
+import de.deminosa.lobby.main.shop.Shop;
 import de.deminosa.lobby.main.timers.ParticelTimer;
 
 /*
@@ -33,6 +35,7 @@ public class Toroku {
 		addEvent(new BlockedListeners());
 		addEvent(new Games());
 		addEvent(new ShopListener());
+		addEvent(new PlayerInteractHandler());
 		
 		MySQLcon();
 		
@@ -40,6 +43,8 @@ public class Toroku {
 		CoreCache.regCoreTimer(new ParticelTimer());
 //		CoreCache.regCoreTimer(new InfoActionbar());
 		LobbyBorder.setWorldBoarder();
+		
+		Shop.init();
 	}
 	
 	private static void addEvent(Listener listener) {

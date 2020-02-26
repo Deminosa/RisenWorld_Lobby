@@ -45,9 +45,9 @@ public class InfoActionbar implements CoreTimer{
 	}
 
 	String[] info = {"Willkommen, §e%player%",
-			"§2KnockFFA: §aNeue Maps",
-			"§2SkyPvP+: §aDie Standard Map ist wieder da",
-			"§2AGB: §aAGB Änderungen"};
+			"§2Lobby: §aUpdate in der gesammten Lobby",
+			"§2Neue Games: §aTNT RUN §8- §aUHC §8- §aJumpLeague",
+			"§2Tageslogin: §aErhalte eine Belohnung! Rechtsklick auf die Melone!"};
 
 	private String IndexBuilder() {
 		String s = "§8●";

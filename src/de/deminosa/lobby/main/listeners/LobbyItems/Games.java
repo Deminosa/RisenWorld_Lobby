@@ -36,9 +36,6 @@ public class Games implements Listener{
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		if(event.getItem() != null) {
-			if(event.getItem().equals(Utils.getEVENT())) {
-				Utils.connectTo(event.getPlayer(), "Event-1");
-				}
 			if(event.getItem().equals(Utils.getJUMP())) {
 				if(!Jump.sucBlocks.containsKey(event.getPlayer())) {
 					Jump.start(event.getPlayer());
@@ -63,6 +60,19 @@ public class Games implements Listener{
 					@Override
 					public ItemStack getIcon() {
 						return new ItemBuilder(Material.IRON_SWORD).setName("§6"+warp+"+").build();
+					}
+				});
+				
+				gui.setButton(4, new GUIButton() {
+					@Override
+					public void onClick(InventoryClickEvent arg0) {
+						Utils.connectTo(event.getPlayer(), "Event-1");
+					}
+					
+					@Override
+					public ItemStack getIcon() {
+						return new ItemBuilder(Material.GLOWSTONE).setName("§6Event Server")
+								.addLoreLine("§7Verbinde dich mit dem Event Server!").build();
 					}
 				});
 				
@@ -146,7 +156,7 @@ public class Games implements Listener{
 					
 					@Override
 					public ItemStack getIcon() {
-						return new ItemBuilder(Material.NETHER_STAR).setName("§6Spawn").build();
+						return new ItemBuilder(Material.EYE_OF_ENDER).setName("§6Spawn").build();
 					}
 				});
 				

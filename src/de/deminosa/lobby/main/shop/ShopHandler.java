@@ -1,23 +1,25 @@
 package de.deminosa.lobby.main.shop;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
+import de.deminosa.core.utils.IDManager.IDManager;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
 /*
-*	Class Create by Deminosa
-*	YouTube: 	Deminosa
-* 	Web:	 	deminosa.de
-*	Create at: 	19:21:32 # 22.12.2019
-*
-*/
+ *	Class Create by Deminosa
+ *	YouTube: 	Deminosa
+ * 	Web:	 	deminosa.de
+ *	Create at: 	19:21:32 # 22.12.2019
+ *
+ */
 
 public class ShopHandler {
 
 	private static String table = "LobbyShop_", ItemID = "ItemID", buy = "Bought", InUse = "InUse";
-	
+
 	public static boolean hasAmount(ShopType shopType, UUID uuid) {
 		int i = MySQL.getInt(table+shopType.name(), "UUID", uuid.toString(), "amount");
 		if(i > 0) {
@@ -25,23 +27,29 @@ public class ShopHandler {
 		}
 		return false;
 	}
-	
-	public static boolean hasBought(ShopType shopType, UUID uuid) {
-		int i = MySQL.getInt(table+shopType.name(), "UUID", uuid.toString(), buy);
-		if(i == 1) {
-			return true;
+
+	public static boolean hasBought(ShopType shopType, UUID uuid, ShopItemBuilder item) {
+		ArrayList<String> ItemIDs = MySQL.getArrayList(table+shopType.name(), "UUID", uuid.toString(), ItemID);
+		if(ItemIDs != null) {
+			if(ItemIDs.contains(String.valueOf(item.getItemID()))) {
+				return true;
+			}
+			return false;
 		}
 		return false;
 	}
-	
+
 	public static void setAmount(ShopType shopType, UUID uuid, int i) {
 		MySQL.update(table+shopType.name(), "amount", String.valueOf(i), "UUID", uuid.toString());
 	}
-	
+
 	public static void setBought(ShopType shopType, ShopItemBuilder item, UUID uuid) {
-		MySQL.update(table+shopType.name(), "UUID", uuid.toString(), ItemID, String.valueOf(item.getItemID()));
-		MySQL.update(table+shopType.name(), "amount", String.valueOf(1), ItemID, String.valueOf(item.getItemID()));
-		MySQL.update(table+shopType.name(), buy, String.valueOf(1), ItemID, String.valueOf(item.getItemID()));
+		String ID_OK = IDManager.generateIDWithSlpit(200, 8);
+		MySQL.set(table+shopType.name(), "OK", ID_OK);
+		MySQL.update(table+shopType.name(), "UUID", uuid.toString(), "OK", ID_OK);
+		MySQL.update(table+shopType.name(), ItemID, ""+item.getItemID(), "OK", ID_OK);
+		MySQL.update(table+shopType.name(), "amount", String.valueOf(1), "OK", ID_OK);
+		MySQL.update(table+shopType.name(), buy, String.valueOf(1), "OK", ID_OK);
 	}
-	
+
 }
