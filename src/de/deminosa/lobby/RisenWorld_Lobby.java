@@ -32,6 +32,8 @@ public class RisenWorld_Lobby extends JavaPlugin {
 				Toroku.init();
 				tabInitText();
 				OnUpdater();
+				Bukkit.getWorld("world").setStorm(false);
+				Bukkit.getWorld("world").setThundering(false);
 			}
 		}.runTaskLater(getInstance(), 2);
 	}
@@ -133,12 +135,19 @@ public class RisenWorld_Lobby extends JavaPlugin {
 	public int all = 3;
 	public int repeat = 4;
 	public void tabInitText(){
+		
+		/*
+		 * {"Willkommen, §e%player%",
+			"§2Lobby: §aUpdate in der gesammten Lobby",
+			"§2Neue Games: §aTNT RUN §8- §aUHC §8- §aJumpLeague",
+			"§2Tageslogin: §aErhalte eine Belohnung! Rechtsklick auf die Melone!"};
+		 */
 		tab = new String[5];
 		tab[0] = "§bWillkommen, §e%player%";
-		tab[1] = "INFO §8- §bTNT Run: §aTNT Run ist bald für euch am Start!";
-		tab[2] = "INFO §8- §bLobby: §aÄnderungen am Shop, sind bald verfügbar!";
-		tab[3] = "INFO §8- §bANB: §aDie AGB's heißen jetzt Nutzungsbedingungen §8(§7ANB§8)";
-		tab[4] = "AD §8- §bHier könnte ihre Werbung stehen.";
+		tab[1] = "INFO §8- §bLobby: §aUpdate in der gesammten Lobby";
+		tab[2] = "INFO §8- §bNeue Games: §aTNT RUN §8- §aUHC §8- §aJumpLeague";
+		tab[3] = "INFO §8- §bTageslogin: §aErhalte eine Belohnung! Rechtsklick auf die Melone!";
+		tab[4] = "TIP §8- §bEs gibt Belohnungen bei Versteckten Messages.";
 		for(int i = 0; i<tab.length; i++){
 			all+=tab[i].length();
 		}

@@ -34,7 +34,7 @@ public class Utils {
 	}
 	
 	public static ItemStack getREWARD() {
-		return new ItemBuilder(Material.SPECKLED_MELON).setName("§b➤ §6Belohnungen")
+		return new ItemBuilder(Material.SPECKLED_MELON).setName("§b➤ §6Tagesbonus")
 				.addUnsafeEnchantment(Enchantment.LUCK, 0).build();
 	}
 	

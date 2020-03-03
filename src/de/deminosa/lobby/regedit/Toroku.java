@@ -9,7 +9,6 @@ import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.border.LobbyBorder;
 import de.deminosa.lobby.main.commands.Lobby;
-import de.deminosa.lobby.main.listeners.InfoActionbar;
 import de.deminosa.lobby.main.listeners.Join;
 import de.deminosa.lobby.main.listeners.LobbyItems.Games;
 import de.deminosa.lobby.main.listeners.LobbyItems.ShopListener;
@@ -55,6 +54,10 @@ public class Toroku {
 		String[] colum = {"UUID", "allow"};
 		ColumType[] type = {ColumType.VARCHAR_128, ColumType.VARCHAR_32};
 		MySQL.createTable("AGB", colum, type);
+		
+		String[] DayLogincolum = {"UUID", "LastDay", "LastMonth", "Streak"};
+		ColumType[] DayLogintype = {ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.VARCHAR_32, ColumType.VARCHAR_32};
+		MySQL.createTable("DayLogin", DayLogincolum, DayLogintype);
 		
 		String[] ShopColum = {"UUID", "item", "amount"};
 		ColumType[] ShopType = {ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.INT};

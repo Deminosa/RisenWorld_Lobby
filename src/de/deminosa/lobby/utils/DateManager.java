@@ -13,6 +13,18 @@ import java.util.Date;
 
 public class DateManager {
 
+	public static String getDay() {
+		SimpleDateFormat date = new SimpleDateFormat("dd");
+		String datum = date.format(new Date());
+		return datum;
+	}
+	
+	public static String getMonth() {
+		SimpleDateFormat date = new SimpleDateFormat("MM");
+		String datum = date.format(new Date());
+		return datum;
+	}
+	
 	public static String getTime() {
 		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
 		String time = date.format(new Date());
