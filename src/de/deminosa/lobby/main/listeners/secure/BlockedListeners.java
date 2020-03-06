@@ -1,6 +1,8 @@
 package de.deminosa.lobby.main.listeners.secure;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +20,6 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.lobby.RisenWorld_Lobby;
-import de.deminosa.lobby.utils.Utils;
 
 /*
 *	Class Create by Deminosa
@@ -83,7 +84,17 @@ public class BlockedListeners implements Listener{
 	
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
-		event.setCancelled(true);
+		if(event.getEntityType() != EntityType.PLAYER) return;
+		
+		Player Damager = (Player)event.getDamager();
+		Player getDamage = (Player)event.getEntity();
+		
+		if(Damager.getItemInHand().getType() == Material.STICK && 
+				getDamage.getInventory().getItem(7).getType() == Material.STICK) {
+			event.setCancelled(false);
+		}else {
+			event.setCancelled(true);
+		}
 	}
 	
 	@EventHandler

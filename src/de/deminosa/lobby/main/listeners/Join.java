@@ -112,8 +112,7 @@ public class Join implements Listener{
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				player.getInventory().setItem(7, new ItemBuilder(Material.BARRIER)
-						.setName("§c§lDemnächst").build());
+				player.getInventory().setItem(7, Utils.getTOY());
 				player.getInventory().setItem(1, Utils.getJUMP());
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 50);
@@ -146,8 +145,13 @@ public class Join implements Listener{
 					.setDurability((short)15)
 					.setName("§c").build());	
 		}
+		
+		player.getInventory().setItem(20, new ItemBuilder(Material.REDSTONE).setName("§c§lDemnächst")
+				.addLoreLine("§7Geplant: §6Eintellungen").build());
 		player.getInventory().setItem(22, new ItemBuilder(Material.GLOWSTONE).setName("§6Event Server")
-								.addLoreLine("§7Verbinde dich mit dem Event Server!").build());
+				.addLoreLine("§7Verbinde dich mit dem Event Server!").build());
+		player.getInventory().setItem(24, new ItemBuilder(Material.CHEST).setName("§c§lDemnächst")
+				.addLoreLine("§7Geplant: §6Lotto").build());
 	}
 	
 	@EventHandler

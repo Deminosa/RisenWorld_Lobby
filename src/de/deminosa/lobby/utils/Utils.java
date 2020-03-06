@@ -38,6 +38,11 @@ public class Utils {
 				.addUnsafeEnchantment(Enchantment.LUCK, 0).build();
 	}
 	
+	public static ItemStack getTOY() {
+		return new ItemBuilder(Material.BARRIER)
+				.setName("§c§lWähle ein Spielzeug aus!").build();
+	}
+	
 	public static ItemStack getEVENT() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§b➤ §6Event Server").build();
 	}

@@ -24,6 +24,8 @@ import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorGold;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorIron;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLether;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLetherRainbow;
+import de.deminosa.lobby.main.shop.Items.toy.ToyJumpStick;
+import de.deminosa.lobby.main.shop.Items.toy.ToyKnockBack;
 import de.deminosa.lobby.main.shop.api.ShopInfo;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
@@ -79,12 +81,16 @@ public class Shop {
 		items.put(new ShopArmorDiamond.Leggins(), ShopType.ARMOR);
 		
 		items.put(new ShopArmorLetherRainbow(), ShopType.ARMOR);
+		
+		items.put(new ToyKnockBack(), ShopType.TOY);
+		items.put(new ToyJumpStick(), ShopType.TOY);
 	}
 
 	public static void openInit(CorePlayer player) {
 		GUI gui = new GUI(player, "§6Shop §0-> §eSelect...", 9);
 
 		gui.setButton(0, new ShopInfo.Balance(player.getBukkitPlayer()));
+		gui.setButton(8, new ShopInfo.Balance(player.getBukkitPlayer()));
 
 		gui.setButton(2, new GUIButton() {
 			@Override
@@ -114,20 +120,20 @@ public class Shop {
 			}
 		});
 
-		gui.setButton(4, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.REDSTONE)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Eintellungen")
-						.build();
-			}
-		});
+//		gui.setButton(4, new GUIButton() {
+//			@Override
+//			public void onClick(InventoryClickEvent arg0) {
+//				//openShop(ShopType.NONE, cplayer);
+//			}
+//
+//			@Override
+//			public ItemStack getIcon() {
+//				return new ItemBuilder(Material.REDSTONE)
+//						.setName("§c§lDemnächst")
+//						.addLoreLine("§7Geplant: §6Eintellungen")
+//						.build();
+//			}
+//		});
 
 		gui.setButton(5, new GUIButton() {
 			@Override
@@ -147,32 +153,31 @@ public class Shop {
 		gui.setButton(6, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
+				openShop(ShopType.TOY, player);
 			}
 
 			@Override
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.STICK)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Spielzeuge")
+						.setName("§6Spielzeuge")
 						.build();
 			}
 		});
 
-		gui.setButton(8, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.CHEST)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Lotto")
-						.build();
-			}
-		});
+//		gui.setButton(8, new GUIButton() {
+//			@Override
+//			public void onClick(InventoryClickEvent arg0) {
+//				//openShop(ShopType.NONE, cplayer);
+//			}
+//
+//			@Override
+//			public ItemStack getIcon() {
+//				return new ItemBuilder(Material.CHEST)
+//						.setName("§c§lDemnächst")
+//						.addLoreLine("§7Geplant: §6Lotto")
+//						.build();
+//			}
+//		});
 
 		gui.open();
 	}
@@ -194,6 +199,7 @@ public class Shop {
 //			});
 //		}
 		gui.setButton(45, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
+		gui.setButton(53, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 
 		gui.setButton(47, new GUIButton() {
 			@Override
@@ -223,20 +229,20 @@ public class Shop {
 			}
 		});
 
-		gui.setButton(49, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.REDSTONE)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Eintellungen")
-						.build();
-			}
-		});
+//		gui.setButton(49, new GUIButton() {
+//			@Override
+//			public void onClick(InventoryClickEvent arg0) {
+//				//openShop(ShopType.NONE, cplayer);
+//			}
+//
+//			@Override
+//			public ItemStack getIcon() {
+//				return new ItemBuilder(Material.REDSTONE)
+//						.setName("§c§lDemnächst")
+//						.addLoreLine("§7Geplant: §6Eintellungen")
+//						.build();
+//			}
+//		});
 
 		gui.setButton(50, new GUIButton() {
 			@Override
@@ -256,32 +262,31 @@ public class Shop {
 		gui.setButton(51, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
+				openShop(ShopType.TOY, cplayer);
 			}
 
 			@Override
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.STICK)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Spielzeuge")
+						.setName("§6Spielzeuge")
 						.build();
 			}
 		});
 
-		gui.setButton(53, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.CHEST)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Lotto")
-						.build();
-			}
-		});
+//		gui.setButton(53, new GUIButton() {
+//			@Override
+//			public void onClick(InventoryClickEvent arg0) {
+//				//openShop(ShopType.NONE, cplayer);
+//			}
+//
+//			@Override
+//			public ItemStack getIcon() {
+//				return new ItemBuilder(Material.CHEST)
+//						.setName("§c§lDemnächst")
+//						.addLoreLine("§7Geplant: §6Lotto")
+//						.build();
+//			}
+//		});
 
 		int t = 0;
 
