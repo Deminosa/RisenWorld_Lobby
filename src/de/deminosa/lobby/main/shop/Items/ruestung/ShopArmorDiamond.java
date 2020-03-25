@@ -27,10 +27,10 @@ public class ShopArmorDiamond {
 	public static class Helmet implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 275;}
+		public int getPrice() {return 4000;}
 
 		@Override
-		public String getItemName() {return "Diamant Rüstung";}
+		public String getItemName() {return "Diamant Helm";}
 
 		@Override
 		public void getAction(Player player) {
@@ -63,15 +63,17 @@ public class ShopArmorDiamond {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Chestplate implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 275;}
+		public int getPrice() {return 4000;}
 
 		@Override
-		public String getItemName() {return "Diamant Rüstung";}
+		public String getItemName() {return "Diamant Brustplatte";}
 
 		@Override
 		public void getAction(Player player) {
@@ -104,15 +106,17 @@ public class ShopArmorDiamond {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Leggins implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 275;}
+		public int getPrice() {return 4000;}
 
 		@Override
-		public String getItemName() {return "Diamant Rüstung";}
+		public String getItemName() {return "Diamant Hose";}
 
 		@Override
 		public void getAction(Player player) {
@@ -145,15 +149,17 @@ public class ShopArmorDiamond {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Boots implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 275;}
+		public int getPrice() {return 4000;}
 
 		@Override
-		public String getItemName() {return "Diamant Rüstung";}
+		public String getItemName() {return "Diamant Schuhe";}
 
 		@Override
 		public void getAction(Player player) {
@@ -186,6 +192,8 @@ public class ShopArmorDiamond {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 }

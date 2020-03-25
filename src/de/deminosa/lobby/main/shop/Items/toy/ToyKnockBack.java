@@ -59,7 +59,7 @@ public class ToyKnockBack implements ShopItemBuilder{
 
 	@Override
 	public int getItemID() {
-		return 10;
+		return 58909674;
 	}
 
 	@Override
@@ -71,5 +71,8 @@ public class ToyKnockBack implements ShopItemBuilder{
 	public int getItemLevel() {
 		return 0;
 	}
+	
+	@Override
+	public boolean canBuying() {return true;}
 
 }

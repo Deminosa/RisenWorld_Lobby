@@ -13,11 +13,23 @@ import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
 import de.deminosa.core.Core;
 import de.deminosa.core.builders.CorePlayer;
+import de.deminosa.core.cache.CorePlayerData;
 import de.deminosa.core.utils.gui.GUI;
 import de.deminosa.core.utils.gui.GUIButton;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.mysql.ColumType;
 import de.deminosa.core.utils.mysql.MySQL;
+import de.deminosa.lobby.main.shop.Items.effecte.EffectBarierre;
+import de.deminosa.lobby.main.shop.Items.effecte.EffectFlame;
+import de.deminosa.lobby.main.shop.Items.effecte.EffectHerz;
+import de.deminosa.lobby.main.shop.Items.pets.PetChicken;
+import de.deminosa.lobby.main.shop.Items.pets.PetCow;
+import de.deminosa.lobby.main.shop.Items.pets.PetPig;
+import de.deminosa.lobby.main.shop.Items.pets.PetPilzkuh;
+import de.deminosa.lobby.main.shop.Items.pets.PetRabbit;
+import de.deminosa.lobby.main.shop.Items.pets.PetSheep;
+import de.deminosa.lobby.main.shop.Items.pets.PetUitls;
+import de.deminosa.lobby.main.shop.Items.pets.PetWolf;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorChain;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorDiamond;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorGold;
@@ -41,6 +53,7 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 public class Shop {
 
 	private static HashMap<ShopItemBuilder, ShopType> items = new HashMap<>();
+	@SuppressWarnings("unused")
 	private static String table = "LobbyShop_", ItemID = "ItemID", buy = "Bought", InUse = "InUse", OK = "OK";
 
 	public static void init() {
@@ -84,6 +97,18 @@ public class Shop {
 		
 		items.put(new ToyKnockBack(), ShopType.TOY);
 		items.put(new ToyJumpStick(), ShopType.TOY);
+		
+		items.put(new EffectHerz(), ShopType.EFFECT);
+		items.put(new EffectFlame(), ShopType.EFFECT);
+		items.put(new EffectBarierre(), ShopType.EFFECT);
+		
+		items.put(new PetSheep(), ShopType.PET);
+		items.put(new PetCow(), ShopType.PET);
+		items.put(new PetChicken(), ShopType.PET);
+		items.put(new PetPig(), ShopType.PET);
+		items.put(new PetWolf(), ShopType.PET);
+		items.put(new PetPilzkuh(), ShopType.PET);
+		items.put(new PetRabbit(), ShopType.PET);
 	}
 
 	public static void openInit(CorePlayer player) {
@@ -138,14 +163,13 @@ public class Shop {
 		gui.setButton(5, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
+				openShop(ShopType.PET, player);
 			}
 
 			@Override
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.MONSTER_EGG)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Haustiere")
+						.setName("§6Haustiere")
 						.build();
 			}
 		});
@@ -198,6 +222,34 @@ public class Shop {
 //				}
 //			});
 //		}
+		if(type == ShopType.PET) {
+			gui.setButton(40, new GUIButton() {
+				@Override
+				public void onClick(InventoryClickEvent arg0) {
+					PetUitls.stopFollow(cplayer.getBukkitPlayer());
+				}
+				
+				@Override
+				public ItemStack getIcon() {
+					return new ItemBuilder(Material.BARRIER).setName("§cHaustier Entfernen").build();
+				}
+			});
+		}
+		
+		if(type == ShopType.EFFECT) {
+			gui.setButton(40, new GUIButton() {
+				@Override
+				public void onClick(InventoryClickEvent arg0) {
+					CorePlayerData.setData(cplayer, "lobby", "effect", null);
+				}
+				
+				@Override
+				public ItemStack getIcon() {
+					return new ItemBuilder(Material.BARRIER).setName("§cEffecte Entfernen").build();
+				}
+			});
+		}
+		
 		gui.setButton(45, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 		gui.setButton(53, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 
@@ -247,14 +299,13 @@ public class Shop {
 		gui.setButton(50, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
-				//openShop(ShopType.NONE, cplayer);
+				openShop(ShopType.PET, cplayer);
 			}
 
 			@Override
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.MONSTER_EGG)
-						.setName("§c§lDemnächst")
-						.addLoreLine("§7Geplant: §6Haustiere")
+						.setName("§6Haustiere")
 						.build();
 			}
 		});
@@ -303,37 +354,41 @@ public class Shop {
 								@Override
 								public void onClick(InventoryClickEvent event) {
 									Player player = (Player)event.getWhoClicked();
-									if(Coins.getCoins(player) >= item.getPrice()) {
-										if(!ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
-											if(item.getItemID() != 105) {
-												Coins.action(CoinAction.REMOVE, player, item.getPrice());
-
-												cplayer.sendMessage("Shop", "§aVielen dank für ihren Einkauf! §8(§7"+item.getIcon(cplayer).getItemMeta().getDisplayName()+"§8)");
-												cplayer.playsound(Sound.ORB_PICKUP);
-												ShopHandler.setBought(type, item, player.getUniqueId());
-												openShop(type, cplayer);
-											}else {
-												if(ShopArmorLether.hasAllLether(player)) {
+									if(item.canBuying()) {
+										if(Coins.getCoins(player) >= item.getPrice()) {
+											if(!ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
+												if(item.getItemID() != 105) {
 													Coins.action(CoinAction.REMOVE, player, item.getPrice());
 
-													cplayer.sendMessage("Shop", "§aVielen dank für ihren Einkauf! §8(§7Regenbogen Rüstung. Leder.§8)");
+													cplayer.sendMessage("Shop", "§aVielen dank für ihren Einkauf! §8(§7"+item.getIcon(cplayer).getItemMeta().getDisplayName()+"§8)");
 													cplayer.playsound(Sound.ORB_PICKUP);
 													ShopHandler.setBought(type, item, player.getUniqueId());
 													openShop(type, cplayer);
 												}else {
-													cplayer.sendMessage("Shop", "§cBitte Kaufe zuerst alle Leder Rüstungen!");
+													if(ShopArmorLether.hasAllLether(player)) {
+														Coins.action(CoinAction.REMOVE, player, item.getPrice());
+
+														cplayer.sendMessage("Shop", "§aVielen dank für ihren Einkauf! §8(§7Regenbogen Rüstung. Leder.§8)");
+														cplayer.playsound(Sound.ORB_PICKUP);
+														ShopHandler.setBought(type, item, player.getUniqueId());
+														openShop(type, cplayer);
+													}else {
+														cplayer.sendMessage("Shop", "§cBitte Kaufe zuerst alle Leder Rüstungen!");
+													}
 												}
+											}else {
+												item.getAction(player);
+												//player.closeInventory();
 											}
 										}else {
-											item.getAction(player);
-											//player.closeInventory();
+											if(ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
+												item.getAction(player);
+											}else {
+												cplayer.sendMessage("Shop", "§cBitte überprüfe ob du genügen coins hast.");
+											}
 										}
 									}else {
-										if(ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
-											item.getAction(player);
-										}else {
-											cplayer.sendMessage("Shop", "§cBitte überprüfe ob du genügen coins hast.");
-										}
+										cplayer.sendMessage("Shop", "§cDieses Item kann nicht gekauft werden!");
 									}
 								}
 

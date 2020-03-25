@@ -29,7 +29,7 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 1000;
+		return 10000;
 	}
 
 	@Override
@@ -92,5 +92,8 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 	public int getItemLevel() {
 		return 0;
 	}
+	
+	@Override
+	public boolean canBuying() {return true;}
 
 }

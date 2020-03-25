@@ -28,6 +28,14 @@ public class DayLoginHandler {
 		return true;
 	}
 	
+	public static void regist(CorePlayer player) {
+		if(!MySQL.exsistValue("DayLogin", "UUID", player.getUUIDAsString(), "UUID")) {
+			MySQL.set("DayLogin", "UUID", player.getUUIDAsString());
+			MySQL.update("DayLogin", "LastDay", "0", "UUID", player.getUUIDAsString());
+			MySQL.update("DayLogin", "LastMonth", "0", "UUID", player.getUUIDAsString());
+		}
+	}
+	
 	public static void updateReward(CorePlayer player) {
 		if(!MySQL.exsistValue("DayLogin", "UUID", player.getUUIDAsString(), "UUID")) {
 			MySQL.set("DayLogin", "UUID", player.getUUIDAsString());
@@ -57,8 +65,8 @@ public class DayLoginHandler {
 		int dayResult = lastDay - currentDay;
 		int monthResult = lastMonth - currentMonth;
 		
-		if(dayResult == 1 || dayResult == 30 || dayResult == 29) {
-			if(monthResult == 0 || monthResult == 1) {
+		if(dayResult == -1 || dayResult == -30 || dayResult == -29) {
+			if(monthResult == 0 || monthResult == -1) {
 				int getStreak = MySQL.getInt("DayLogin", "Streak", "UUID", player.getUUIDAsString());
 				int streakResult = getStreak + 1;
 				if(streakResult == 7) {
@@ -76,5 +84,13 @@ public class DayLoginHandler {
 			MySQL.update("DayLogin", "Streak", String.valueOf(0), "UUID", player.getUUIDAsString());
 			CorePlayerData.setData(player, "DayLogin", "7Streak", false);
 		}
+	}
+	
+	public static int getStreak(CorePlayer player) {
+		return MySQL.getInt("DayLogin", "Streak", "UUID", player.getUUIDAsString());
+	}
+	
+	public static String getLastDay(CorePlayer player) {
+		return MySQL.getString("DayLogin", "UUID", player.getUUIDAsString(), "LastDay");
 	}
 }

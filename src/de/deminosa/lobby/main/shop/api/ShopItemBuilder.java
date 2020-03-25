@@ -22,5 +22,6 @@ public interface ShopItemBuilder {
 	public int getItemID();
 	public int getSlot();
 	public int getItemLevel();
+	public boolean canBuying();
 	
 }

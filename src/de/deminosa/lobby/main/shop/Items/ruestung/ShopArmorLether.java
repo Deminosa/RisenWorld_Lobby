@@ -37,10 +37,10 @@ public class ShopArmorLether {
 	public static class Helmet implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 75;}
+		public int getPrice() {return 1500;}
 
 		@Override
-		public String getItemName() {return "Leder Rüstung";}
+		public String getItemName() {return "Leder Helm";}
 
 		@Override
 		public void getAction(Player player) {
@@ -73,15 +73,17 @@ public class ShopArmorLether {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Chestplate implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 75;}
+		public int getPrice() {return 1500;}
 
 		@Override
-		public String getItemName() {return "Leder Rüstung";}
+		public String getItemName() {return "Leder Brustplatte";}
 
 		@Override
 		public void getAction(Player player) {
@@ -114,15 +116,17 @@ public class ShopArmorLether {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Leggins implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 75;}
+		public int getPrice() {return 1500;}
 
 		@Override
-		public String getItemName() {return "Leder Rüstung";}
+		public String getItemName() {return "Leder Hose";}
 
 		@Override
 		public void getAction(Player player) {
@@ -155,15 +159,17 @@ public class ShopArmorLether {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Boots implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 75;}
+		public int getPrice() {return 1500;}
 
 		@Override
-		public String getItemName() {return "Leder Rüstung";}
+		public String getItemName() {return "Leder Schuhe";}
 
 		@Override
 		public void getAction(Player player) {
@@ -196,6 +202,8 @@ public class ShopArmorLether {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 }

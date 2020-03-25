@@ -11,10 +11,10 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
-
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
+import de.deminosa.lobby.main.lotto.LottoQuestion;
 import de.deminosa.lobby.main.shop.Shop;
 import de.deminosa.lobby.main.timers.ParticelTimer;
 import de.deminosa.lobby.utils.Utils;
@@ -51,7 +51,9 @@ public class ShopListener implements Listener{
 				}
 				
 				if(event.getClickedInventory().getContents()[event.getRawSlot()] != null && event.getClickedInventory().getContents()[event.getRawSlot()].getType() == Material.CHEST) {
+					Player player = (Player)event.getWhoClicked();
 					
+					LottoQuestion.open(CoreCache.getCorePlayer(player));
 				}
 			}
 		}

@@ -27,10 +27,10 @@ public class ShopArmorIron {
 	public static class Helmet implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 225;}
+		public int getPrice() {return 3250;}
 
 		@Override
-		public String getItemName() {return "Eisen Rüstung";}
+		public String getItemName() {return "Eisen Helm";}
 
 		@Override
 		public void getAction(Player player) {
@@ -63,15 +63,17 @@ public class ShopArmorIron {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Chestplate implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 225;}
+		public int getPrice() {return 3250;}
 
 		@Override
-		public String getItemName() {return "Eisen Rüstung";}
+		public String getItemName() {return "Eisen Brustplatte";}
 
 		@Override
 		public void getAction(Player player) {
@@ -104,15 +106,17 @@ public class ShopArmorIron {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Leggins implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 225;}
+		public int getPrice() {return 3250;}
 
 		@Override
-		public String getItemName() {return "Eisen Rüstung";}
+		public String getItemName() {return "Eisen Hose";}
 
 		@Override
 		public void getAction(Player player) {
@@ -145,15 +149,17 @@ public class ShopArmorIron {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Boots implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 225;}
+		public int getPrice() {return 3250;}
 
 		@Override
-		public String getItemName() {return "Eisen Rüstung";}
+		public String getItemName() {return "Eisen Schuhe";}
 
 		@Override
 		public void getAction(Player player) {
@@ -186,6 +192,8 @@ public class ShopArmorIron {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 }

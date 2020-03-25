@@ -1,7 +1,5 @@
 package de.deminosa.lobby.main.listeners;
 
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,17 +14,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
+import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.cache.CoreCache;
-import de.deminosa.core.utils.UUIDFetcher;
-import de.deminosa.core.utils.Var;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
+import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.agb.AGB;
+import de.deminosa.lobby.main.shop.Items.pets.PetUitls;
 import de.deminosa.lobby.utils.GameChange;
 import de.deminosa.lobby.utils.Utils;
-import de.deminosa.lobby.utils.rocket.RocketBuilder;
 import jump.JumpEndEvent;
 import jump.var;
 
@@ -94,6 +92,7 @@ public class Join implements Listener{
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		event.setQuitMessage("");
+		PetUitls.stopFollow(event.getPlayer());
 	}
 	
 	private void getItems(Player player) {
@@ -136,7 +135,7 @@ public class Join implements Listener{
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				player.getInventory().setItem(4, Utils.getREWARD());
+				player.getInventory().setItem(4, null);
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 80);
 		
@@ -150,8 +149,7 @@ public class Join implements Listener{
 				.addLoreLine("§7Geplant: §6Eintellungen").build());
 		player.getInventory().setItem(22, new ItemBuilder(Material.GLOWSTONE).setName("§6Event Server")
 				.addLoreLine("§7Verbinde dich mit dem Event Server!").build());
-		player.getInventory().setItem(24, new ItemBuilder(Material.CHEST).setName("§c§lDemnächst")
-				.addLoreLine("§7Geplant: §6Lotto").build());
+		player.getInventory().setItem(24, new ItemBuilder(Material.CHEST).setName("§6Lotto").build());
 	}
 	
 	@EventHandler
@@ -159,8 +157,24 @@ public class Join implements Listener{
 		int block = event.getJumpedBlocks();
 		
 		int coins = block/5;
+		int lotto = block/100;
 		Coins.action(CoinAction.ADD, event.getPlayer(), coins);
-		event.setMessage("§9Coins §7Du hast §6" + coins + " coin(s) §7bekommen für §6"+block+" Blöcke§7!");
+		Coins.lottoAction(LottoAction.ADD, event.getPlayer(), lotto);
+		event.setMessage("§9Coins §7Du hast §6" + coins + " coin(s) §7bekommen für §6"+block+" Blöcke§7!\n"
+				+ "§9Lotto §7Du hast §6"+lotto+" Lottoschein(e) §7bekommen");
+		if(!MySQL.exsistValue("jump", "UUID", event.getPlayer().getUniqueId().toString(), "UUID")) {
+			MySQL.set("jump", "UUID", event.getPlayer().getUniqueId().toString());
+			MySQL.update("jump", "reach", ""+block, "UUID", event.getPlayer().getUniqueId().toString());
+			event.getPlayer().sendMessage("§9Jump §7Neuer Rekord: §6" + block + " sprünge!");
+		}else {
+			int sqlBlock = MySQL.getInt("jump", "reach", "UUID", event.getPlayer().getUniqueId().toString());
+			if(block > sqlBlock) {
+				MySQL.update("jump", "reach", ""+block, "UUID", event.getPlayer().getUniqueId().toString());
+				event.getPlayer().sendMessage("§9Jump §7Neuer Rekord: §6" + block + " sprünge!");
+			}else {
+				event.getPlayer().sendMessage("§9Jump §7Rekord: §6" + sqlBlock + " sprünge!");
+			}
+		}
 	}
 	
 }

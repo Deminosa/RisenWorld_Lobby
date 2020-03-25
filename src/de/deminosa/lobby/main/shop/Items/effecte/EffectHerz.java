@@ -1,58 +1,54 @@
-package de.deminosa.lobby.main.shop.Items.toy;
+package de.deminosa.lobby.main.shop.Items.effecte;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.deminosa.core.builders.CorePlayer;
+import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.cache.CorePlayerData;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.Items.effecte.api.EFFECT_TYPE;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
-import de.deminosa.lobby.utils.Utils;
 
 /*
 *	Class Create by Deminosa
 *	YouTube: 	Deminosa
 * 	Web:	 	deminosa.de
-*	Create at: 	16:50:57 # 06.03.2020
+*	Create at: 	19:02:13 # 15.03.2020
 *
 */
 
-public class ToyJumpStick implements ShopItemBuilder{
+public class EffectHerz implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 600;
+		return 1500;
 	}
 
 	@Override
 	public String getItemName() {
-		return "Jump Stick";
+		return "Herzen";
 	}
 
 	@Override
 	public void getAction(Player player) {
-		if(player.getInventory().getItem(7).getType() == Material.BARRIER) {
-			player.getInventory().setItem(7, new ItemBuilder(Material.BLAZE_ROD).setName("§6Jump")
-				.build());
-		}else {
-			player.getInventory().setItem(7, Utils.getTOY());
-		}
+		CorePlayerData.setData(CoreCache.getCorePlayer(player), "lobby", "effect", EFFECT_TYPE.Herz.name());
 	}
 
 	@Override
 	public ItemStack getIcon(CorePlayer player) {
-		return new ItemBuilder(Material.BLAZE_ROD).setName("§6Jump Stick")
-				.addLoreLine("§7Rechtsklick auf Item und Springe in die Luft!")
+		return new ItemBuilder(Material.REDSTONE).setName("§6Herzen")
 				.addLoreLine("")
-				.addLoreLine(ShopHandler.hasBought(ShopType.TOY, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
+				.addLoreLine(ShopHandler.hasBought(ShopType.EFFECT, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
 				.build();
 	}
 
 	@Override
 	public int getItemID() {
-		return 84285637;
+		return 41812978;
 	}
 
 	@Override
@@ -64,8 +60,9 @@ public class ToyJumpStick implements ShopItemBuilder{
 	public int getItemLevel() {
 		return 0;
 	}
-	
-	@Override
-	public boolean canBuying() {return true;}
 
+	@Override
+	public boolean canBuying() {
+		return true;
+	}
 }

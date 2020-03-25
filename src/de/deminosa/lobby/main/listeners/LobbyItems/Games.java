@@ -13,8 +13,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import de.deminosa.coinmanager.Coins;
-import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.gui.GUI;
@@ -23,7 +21,6 @@ import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
-import de.deminosa.lobby.main.daylogin.DayLoginHandler;
 import de.deminosa.lobby.utils.Utils;
 import jump.Jump;
 
@@ -41,21 +38,11 @@ public class Games implements Listener{
 	public void onInteract(PlayerInteractEvent event) {
 		if(event.getItem() != null) {
 			CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
-			if(event.getItem().equals(Utils.getREWARD())) {
-				if(DayLoginHandler.isRewardAvabile(player)) {
-					DayLoginHandler.updateReward(player);
-					player.sendMessage("Tagesbonus", "Du hast §a+50 Coins §7erhalten!");
-					Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 50);
-					
-					String getStreak = MySQL.getString("DayLogin", "UUID", player.getUUIDAsString(), "Streak");
-					player.sendMessage("Tagesbonus", "Streak: " + getStreak);
-				}else {
-					player.sendMessage("Tagesbonus", "§cDu hast bereits deine Belohnung erhalten!");
-				}
-			}
 			if(event.getItem().equals(Utils.getJUMP())) {
 				if(!Jump.sucBlocks.containsKey(event.getPlayer())) {
 					Jump.start(event.getPlayer());
+					int sqlBlock = MySQL.getInt("jump", "reach", "UUID", event.getPlayer().getUniqueId().toString());
+					event.getPlayer().sendMessage("§9Jump §7Rekord: §6" + sqlBlock + " sprünge!");
 				}else {
 					player.sendMessage("§bEmmy", "§cJ'n'R Konnte nicht gestartet werden!");
 				}
@@ -216,8 +203,7 @@ public class Games implements Listener{
 					@Override
 					public void onClick(InventoryClickEvent event) {
 						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-//							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							event.getWhoClicked();
 						}
 					}
 					
@@ -232,8 +218,7 @@ public class Games implements Listener{
 					@Override
 					public void onClick(InventoryClickEvent event) {
 						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-//							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							event.getWhoClicked();
 						}
 					}
 					

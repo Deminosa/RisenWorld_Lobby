@@ -7,10 +7,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import de.deminosa.core.Core;
+import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.CoreTimer;
 import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.cache.CorePlayerData;
 import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
+import de.deminosa.lobby.main.shop.Items.effecte.api.EFFECT_TYPE;
 import de.deminosa.lobby.utils.DateManager;
 import de.deminosa.lobby.utils.Particel;
 import jump.Jump;
@@ -32,9 +35,61 @@ public class ParticelTimer implements CoreTimer{
 	
 	@Override
 	public void tick() {
+		
+		for(Player bplayer : Bukkit.getOnlinePlayers()) {
+			CorePlayer player = CoreCache.getCorePlayer(bplayer);
+			
+			String s = (String)CorePlayerData.loadData(player, "lobby", "effect");
+			
+			try {
+				if(s != null || s != "") {
+					EFFECT_TYPE st = EFFECT_TYPE.valueOf(s);
+				
+					if(st != null) {
+						switch (st) {
+						case Barierren:
+							Particel patB = new Particel(RisenWorld_Lobby.getInstance(), EnumParticle.BARRIER, player.getLocation(), true, 0, 0, 0, 0, 1);
+							patB.drawRandom(0.5f);
+							break;
+						case Flame:
+							Particel patF = new Particel(RisenWorld_Lobby.getInstance(), EnumParticle.FLAME, player.getLocation(), true, 0, 0, 0, 0, 1);
+							patF.drawRandom(0.5f);
+							break;
+						case Herz:
+							Particel patH = new Particel(RisenWorld_Lobby.getInstance(), EnumParticle.HEART, player.getLocation(), true, 0, 0, 0, 0, 1);
+							patH.drawRandom(0.5f);
+							break;
+						default:
+							break;
+						}
+					}
+				}
+			}catch (Exception e) {
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		ticks++;
 		if(ticks == 20) {
 			ticks = 0;
+
 			s++;
 			
 			for(Player player : Bukkit.getOnlinePlayers()) {

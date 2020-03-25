@@ -27,10 +27,10 @@ public class ShopArmorGold {
 	public static class Helmet implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 125;}
+		public int getPrice() {return 2000;}
 
 		@Override
-		public String getItemName() {return "Gold Rüstung";}
+		public String getItemName() {return "Gold Helm";}
 
 		@Override
 		public void getAction(Player player) {
@@ -62,16 +62,18 @@ public class ShopArmorGold {
 
 		@Override
 		public int getItemLevel() {return 0;}
-		
+	
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Chestplate implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 125;}
+		public int getPrice() {return 2000;}
 
 		@Override
-		public String getItemName() {return "Gold Rüstung";}
+		public String getItemName() {return "Gold Brustplatte";}
 
 		@Override
 		public void getAction(Player player) {
@@ -104,15 +106,17 @@ public class ShopArmorGold {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Leggins implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 125;}
+		public int getPrice() {return 2000;}
 
 		@Override
-		public String getItemName() {return "Gold Rüstung";}
+		public String getItemName() {return "Gold Hose";}
 
 		@Override
 		public void getAction(Player player) {
@@ -145,15 +149,17 @@ public class ShopArmorGold {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 	public static class Boots implements ShopItemBuilder{
 
 		@Override
-		public int getPrice() {return 125;}
+		public int getPrice() {return 2000;}
 
 		@Override
-		public String getItemName() {return "Gold Rüstung";}
+		public String getItemName() {return "Gold Schuhe";}
 
 		@Override
 		public void getAction(Player player) {
@@ -186,6 +192,8 @@ public class ShopArmorGold {
 		@Override
 		public int getItemLevel() {return 0;}
 		
+		@Override
+		public boolean canBuying() {return true;}
 	}
 	
 }

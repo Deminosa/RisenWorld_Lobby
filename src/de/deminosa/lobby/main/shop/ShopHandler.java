@@ -3,6 +3,8 @@ package de.deminosa.lobby.main.shop;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+
 import de.deminosa.core.utils.IDManager.IDManager;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
@@ -18,6 +20,7 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 
 public class ShopHandler {
 
+	@SuppressWarnings("unused")
 	private static String table = "LobbyShop_", ItemID = "ItemID", buy = "Bought", InUse = "InUse";
 
 	public static boolean hasAmount(ShopType shopType, UUID uuid) {
@@ -32,6 +35,7 @@ public class ShopHandler {
 		ArrayList<String> ItemIDs = MySQL.getArrayList(table+shopType.name(), "UUID", uuid.toString(), ItemID);
 		if(ItemIDs != null) {
 			if(ItemIDs.contains(String.valueOf(item.getItemID()))) {
+				
 				return true;
 			}
 			return false;
@@ -50,6 +54,23 @@ public class ShopHandler {
 		MySQL.update(table+shopType.name(), ItemID, ""+item.getItemID(), "OK", ID_OK);
 		MySQL.update(table+shopType.name(), "amount", String.valueOf(1), "OK", ID_OK);
 		MySQL.update(table+shopType.name(), buy, String.valueOf(1), "OK", ID_OK);
+	}
+	
+	public static boolean editBought(ShopType shopType, String uuid, String uid, int buyed) {
+		ArrayList<String> ID_OKs = MySQL.getArrayList(table+shopType.name(), "UUID", uuid.toString(), "OK");
+		for(String id : ID_OKs) {
+			ArrayList<String> ItemIDs = MySQL.getArrayList(table+shopType.name(), "OK", id, ItemID);
+			for(String uids : ItemIDs) {
+				if(uids.contains(uid)) {
+					MySQL.update(table+shopType.name(), buy, String.valueOf(buyed), "OK", id);
+					Bukkit.broadcastMessage("Item Found!");
+					return true;
+				}
+			}
+			Bukkit.broadcastMessage(ItemIDs+"");
+			Bukkit.broadcastMessage(ID_OKs+"");
+		}
+		return false;
 	}
 
 }

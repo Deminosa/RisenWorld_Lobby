@@ -1,6 +1,5 @@
 package de.deminosa.lobby.main.listeners.secure;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -90,7 +89,7 @@ public class BlockedListeners implements Listener{
 		Player getDamage = (Player)event.getEntity();
 		
 		if(Damager.getItemInHand().getType() == Material.STICK && 
-				getDamage.getInventory().getItem(7).getType() == Material.STICK) {
+				getDamage.getItemInHand().getType() == Material.STICK) {
 			event.setCancelled(false);
 		}else {
 			event.setCancelled(true);

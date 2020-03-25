@@ -25,6 +25,12 @@ public class DateManager {
 		return datum;
 	}
 	
+	public static String getTime_MIN() {
+		SimpleDateFormat date = new SimpleDateFormat("mm");
+		String time = date.format(new Date());
+		return time;
+	}
+	
 	public static String getTime() {
 		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
 		String time = date.format(new Date());
