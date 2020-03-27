@@ -15,7 +15,6 @@ public class RocketBuilder {
 	Firework fw;
 	
 	public RocketBuilder(World world, Location loc) {
-		world.spawn(loc, Firework.class);
 		fw = loc.getWorld().spawn(loc, Firework.class);
 		fm = fw.getFireworkMeta();
 	}
@@ -32,4 +31,9 @@ public class RocketBuilder {
 		fw.setFireworkMeta(fm);
 	}
 	
+	
+	
+	public void fire() {
+		world.spawn(loc, Firework.class);
+	}
 }

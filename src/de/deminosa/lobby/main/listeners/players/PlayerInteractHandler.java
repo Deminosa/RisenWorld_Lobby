@@ -1,6 +1,9 @@
 package de.deminosa.lobby.main.listeners.players;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,5 +46,4 @@ public class PlayerInteractHandler implements Listener{
 		});
 		gui.open();
 	}
-
 }

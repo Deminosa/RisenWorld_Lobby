@@ -1,12 +1,14 @@
 package de.deminosa.lobby.main.daylogin.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -33,8 +35,10 @@ import de.deminosa.lobby.utils.DateManager;
 public class VillagerListener implements Listener{
 
 	@EventHandler
-	public void openInvVillager(InventoryOpenEvent event) {
-		if(event.getInventory().getType() == InventoryType.MERCHANT) {
+	public void openInvVillager(PlayerInteractEvent event) {
+		Block b = event.getClickedBlock();
+		
+		if(b.getLocation().equals(new Location(Bukkit.getWorld("world"), 57, 81, -30))) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -44,7 +48,7 @@ public class VillagerListener implements Listener{
 					
 					int getStreak = DayLoginHandler.getStreak(player);
 					
-					GUI gui = new GUI(CoreCache.getCorePlayer(bplayer), "§6Der Glückliche Karl", 9);
+					GUI gui = new GUI(CoreCache.getCorePlayer(bplayer), "§6Tagesbonus", 9);
 					
 					if(getStreak == 0 || getStreak == -1 || getStreak == -2) {
 						gui.getInventory().setItem(2, soon(player));
@@ -61,6 +65,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 5);
 									player.sendMessage("Tagesbonus", "Du hast §a+5 Coins§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -72,6 +78,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b5 Coins")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -90,6 +97,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 10);
 									player.sendMessage("Tagesbonus", "Du hast §a+10 Coins§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -101,6 +110,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b10 Coins")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -119,6 +129,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 15);
 									player.sendMessage("Tagesbonus", "Du hast §a+15 Coins§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -130,6 +142,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b15 Coins")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -148,6 +161,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 25);
 									player.sendMessage("Tagesbonus", "Du hast §a+25 Coins§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -159,6 +174,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b25 Coins")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -177,6 +193,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.action(CoinAction.ADD, player.getBukkitPlayer(), 50);
 									player.sendMessage("Tagesbonus", "Du hast §a+50 Coins§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -188,6 +206,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b50 Coins")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -206,6 +225,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.lottoAction(LottoAction.ADD, player.getBukkitPlayer(), 1);
 									player.sendMessage("Tagesbonus", "Du hast §a+1 Lottoschein§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -217,6 +238,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b1 Lottoschein")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});
@@ -234,6 +256,8 @@ public class VillagerListener implements Listener{
 									DayLoginHandler.updateReward(player);
 									Coins.lottoAction(LottoAction.ADD, player.getBukkitPlayer(), 2);
 									player.sendMessage("Tagesbonus", "Du hast §a+2 Lottoscheine§7 erhalten!");
+									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
 								}
 							}
@@ -245,6 +269,7 @@ public class VillagerListener implements Listener{
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
 										.addLoreLine("§7Du erhälst: §b2 Lottoscheine")
+										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}
 						});

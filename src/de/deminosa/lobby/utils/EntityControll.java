@@ -101,7 +101,6 @@ public class EntityControll {
 
 		NPC.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 		world.addEntity(NPC);
-		TestTimer.freezz(NPC, loc);
 	}
 	
 	private static ArrayList<String> listDir(File file) {

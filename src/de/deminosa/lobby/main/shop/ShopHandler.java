@@ -30,19 +30,37 @@ public class ShopHandler {
 		}
 		return false;
 	}
+	
+//	public static int getAmount(ShopType shopType, UUID uuid) {
+//		int i = MySQL.getInt(table+shopType.name(), "UUID", uuid.toString(), "amount");
+//		return i;
+//	}
 
 	public static boolean hasBought(ShopType shopType, UUID uuid, ShopItemBuilder item) {
 		ArrayList<String> ItemIDs = MySQL.getArrayList(table+shopType.name(), "UUID", uuid.toString(), ItemID);
 		if(ItemIDs != null) {
 			if(ItemIDs.contains(String.valueOf(item.getItemID()))) {
-				
 				return true;
 			}
 			return false;
 		}
 		return false;
 	}
-
+	
+	public static boolean removeBought(ShopType shopType, String uuid, ShopItemBuilder item) {
+		ArrayList<String> ID_OKs = MySQL.getArrayList(table+shopType.name(), "UUID", uuid.toString(), "OK");
+		for(String id : ID_OKs) {
+			ArrayList<String> ItemIDs = MySQL.getArrayList(table+shopType.name(), "OK", id, ItemID);
+			for(String uids : ItemIDs) {
+				if(uids.contains(String.valueOf(item.getItemID()))) {
+					MySQL.deleteRow(table+shopType.name(), "OK", id);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static void setAmount(ShopType shopType, UUID uuid, int i) {
 		MySQL.update(table+shopType.name(), "amount", String.valueOf(i), "UUID", uuid.toString());
 	}
@@ -63,12 +81,9 @@ public class ShopHandler {
 			for(String uids : ItemIDs) {
 				if(uids.contains(uid)) {
 					MySQL.update(table+shopType.name(), buy, String.valueOf(buyed), "OK", id);
-					Bukkit.broadcastMessage("Item Found!");
 					return true;
 				}
 			}
-			Bukkit.broadcastMessage(ItemIDs+"");
-			Bukkit.broadcastMessage(ID_OKs+"");
 		}
 		return false;
 	}

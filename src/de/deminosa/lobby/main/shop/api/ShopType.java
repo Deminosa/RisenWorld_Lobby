@@ -14,6 +14,7 @@ public enum ShopType {
 	EFFECT("Effecte"),
 	TOY("Spielzeuge"),
 	PET("Haustiere"),
+	SPECIAL("Special Items"),
 	NONE("§6Sector Auswählen");
 	
 	String invName;

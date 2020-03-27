@@ -1,10 +1,13 @@
 package de.deminosa.lobby.regedit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.core.Core;
 import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.utils.hologramm.Hologram;
 import de.deminosa.core.utils.mysql.ColumType;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.RisenWorld_Lobby;
@@ -55,7 +58,7 @@ public class Toroku {
 		System.out.print("=====================[END]==============================");
 		
 		CoreCache.regCoreTimer(new ParticelTimer());
-		Bukkit.getScheduler().runTaskTimer(RisenWorld_Lobby.getInstance(), new TestTimer(), 20, 20);
+		CoreCache.regCoreTimer(new TestTimer());
 		LobbyBorder.setWorldBoarder();
 		
 		Shop.init();

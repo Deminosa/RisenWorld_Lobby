@@ -1,4 +1,4 @@
-package de.deminosa.lobby.main.shop.Items.effecte;
+package de.deminosa.lobby.main.shop.Items.special;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public String getItemName() {
-		return "Flammen";
+		return "Barrieren";
 	}
 
 	@Override
@@ -40,9 +40,9 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public ItemStack getIcon(CorePlayer player) {
-		return new ItemBuilder(Material.BARRIER).setName("§6Barierren")
+		return new ItemBuilder(Material.BARRIER).setName("§6Barrieren")
 				.addLoreLine("")
-				.addLoreLine(ShopHandler.hasBought(ShopType.EFFECT, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + (getPrice()/1000) + "k")
+				.addLoreLine(ShopHandler.hasBought(ShopType.SPECIAL, player.getUUID(), this) ? "§aIm besitzt" : "§cNicht Kaufbar")
 				.build();
 	}
 
@@ -53,7 +53,7 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 12;
+		return 10;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public boolean canBuying() {
-		return true;
+		return false;
 	}
 
 }

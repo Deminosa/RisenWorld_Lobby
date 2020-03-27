@@ -1,4 +1,4 @@
-package de.deminosa.lobby.main.shop.Items.ruestung;
+package de.deminosa.lobby.main.shop.Items.special;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,8 @@ import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLether;
+import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLetherRainbowTimer;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -74,7 +76,7 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 				.setName("§6"+getItemName())
 				.addLoreLine("§7Regenbogen Rüstung. Leder Rüstung.")
 				.addLoreLine("")
-				.addLoreLine(ShopHandler.hasBought(ShopType.ARMOR, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
+				.addLoreLine(ShopHandler.hasBought(ShopType.SPECIAL, player.getUUID(), this) ? "§aIm besitzt" : "§cNicht Kaufbar")
 				.build();
 	}
 
@@ -85,7 +87,7 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 27;
+		return 12;
 	}
 
 	@Override
@@ -94,6 +96,6 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 	}
 	
 	@Override
-	public boolean canBuying() {return true;}
+	public boolean canBuying() {return false;}
 
 }

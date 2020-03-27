@@ -23,62 +23,64 @@ import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.agb.AGB;
 import de.deminosa.lobby.main.shop.Items.pets.PetUitls;
+import de.deminosa.lobby.main.timers.TestTimer;
 import de.deminosa.lobby.utils.GameChange;
 import de.deminosa.lobby.utils.Utils;
 import jump.JumpEndEvent;
 import jump.var;
 
 /*
-*	Class Create by Deminosa
-*	YouTube: 	Deminosa
-* 	Web:	 	deminosa.de
-*	Create at: 	18:18:34 # 13.09.2019
-*
-*/
+ *	Class Create by Deminosa
+ *	YouTube: 	Deminosa
+ * 	Web:	 	deminosa.de
+ *	Create at: 	18:18:34 # 13.09.2019
+ *
+ */
 
 public class Join implements Listener{
-	
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		event.setJoinMessage("");
-		
+
 		event.getPlayer().teleport(WarpManager.getWarpLocation("spawn"));
-		
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				getItems(event.getPlayer());
 				GameChange.sendGameState(event.getPlayer(), 3, -1);
+				TestTimer.createHolo();
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2);
-		
+
 		new BukkitRunnable() {
-			
+
 			@Override
 			public void run() {
 				if(!event.getPlayer().getName().equalsIgnoreCase("Deminosa")) {
 					if(var.Chance(50)) {
-//						event.getPlayer().kickPlayer("§bEmmy §8|\n"
-//								+ "§7Du wurdest für auffälliges Verhalten vom Server Geworfen!\n"
-//								+ "§6\n"
-//								+ "§6Sollte dies ein Fehler sein, melde dich beim Support!");
+						//						event.getPlayer().kickPlayer("§bEmmy §8|\n"
+						//								+ "§7Du wurdest für auffälliges Verhalten vom Server Geworfen!\n"
+						//								+ "§6\n"
+						//								+ "§6Sollte dies ein Fehler sein, melde dich beim Support!");
 					}
 				}
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20*10);
 	}
-	
+
 	@EventHandler
 	public void ItemHolder(PlayerItemHeldEvent event) {
 		CorePlayer player = CoreCache.getCorePlayer(event.getPlayer());
 		player.playsound(Sound.CLICK);
 	}
-	
+
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		AGB.open(event.getPlayer());
 	}
-	
+
 	@EventHandler
 	public void onMove(InventoryCloseEvent event) {
 		new BukkitRunnable() {
@@ -88,74 +90,46 @@ public class Join implements Listener{
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 40);
 	}
-	
+
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		event.setQuitMessage("");
 		PetUitls.stopFollow(event.getPlayer());
 	}
-	
+
 	private void getItems(Player player) {
-		for(int i = 0; i < 9; i++) {
-			player.getInventory().setItem(i, new ItemBuilder(Material.BARRIER).setName("§c§lLoading").build());
-		}
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				player.getInventory().setItem(0, Utils.getGAMES());
-				player.getInventory().setItem(8, Utils.getSHOP());
-			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 40);
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				player.getInventory().setItem(7, Utils.getTOY());
-				player.getInventory().setItem(1, Utils.getJUMP());
-			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 50);
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				player.getInventory().setItem(6, null);
-				player.getInventory().setItem(2, null);
-			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 60);
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				player.getInventory().setItem(5, null);
-				player.getInventory().setItem(3, null);
-			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 70);
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				player.getInventory().setItem(4, null);
-			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 80);
-		
+		player.getInventory().clear();
+		player.getInventory().setItem(0, Utils.getGAMES());
+		player.getInventory().setItem(8, Utils.getSHOP());
+
+		player.getInventory().setItem(7, Utils.getTOY());
+		player.getInventory().setItem(1, Utils.getJUMP());
+
+		player.getInventory().setItem(6, null);
+		player.getInventory().setItem(2, null);
+
+		player.getInventory().setItem(5, null);
+		player.getInventory().setItem(3, null);
+
+		player.getInventory().setItem(4, null);
+
 		for(int i = 9; i < 36; i++) {
 			player.getInventory().setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE)
 					.setDurability((short)15)
 					.setName("§c").build());	
 		}
-		
+
 		player.getInventory().setItem(20, new ItemBuilder(Material.REDSTONE).setName("§c§lDemnächst")
 				.addLoreLine("§7Geplant: §6Eintellungen").build());
 		player.getInventory().setItem(22, new ItemBuilder(Material.GLOWSTONE).setName("§6Event Server")
 				.addLoreLine("§7Verbinde dich mit dem Event Server!").build());
 		player.getInventory().setItem(24, new ItemBuilder(Material.CHEST).setName("§6Lotto").build());
 	}
-	
+
 	@EventHandler
 	public void JumpEnd(JumpEndEvent event) {
 		int block = event.getJumpedBlocks();
-		
+
 		int coins = block/5;
 		int lotto = block/100;
 		Coins.action(CoinAction.ADD, event.getPlayer(), coins);
@@ -176,5 +150,5 @@ public class Join implements Listener{
 			}
 		}
 	}
-	
+
 }

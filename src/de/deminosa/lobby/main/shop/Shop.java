@@ -19,7 +19,6 @@ import de.deminosa.core.utils.gui.GUIButton;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.mysql.ColumType;
 import de.deminosa.core.utils.mysql.MySQL;
-import de.deminosa.lobby.main.shop.Items.effecte.EffectBarierre;
 import de.deminosa.lobby.main.shop.Items.effecte.EffectFlame;
 import de.deminosa.lobby.main.shop.Items.effecte.EffectHerz;
 import de.deminosa.lobby.main.shop.Items.pets.PetChicken;
@@ -35,7 +34,9 @@ import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorDiamond;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorGold;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorIron;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLether;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLetherRainbow;
+import de.deminosa.lobby.main.shop.Items.special.EffectBarierre;
+import de.deminosa.lobby.main.shop.Items.special.ShopArmorLetherRainbow;
+import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
 import de.deminosa.lobby.main.shop.Items.toy.ToyJumpStick;
 import de.deminosa.lobby.main.shop.Items.toy.ToyKnockBack;
 import de.deminosa.lobby.main.shop.api.ShopInfo;
@@ -72,36 +73,33 @@ public class Shop {
 		items.put(new ShopArmorLether.Chestplate(), ShopType.ARMOR);
 		items.put(new ShopArmorLether.Boots(), ShopType.ARMOR);
 		items.put(new ShopArmorLether.Leggins(), ShopType.ARMOR);
-		
+
 		items.put(new ShopArmorIron.Helmet(), ShopType.ARMOR);
 		items.put(new ShopArmorIron.Chestplate(), ShopType.ARMOR);
 		items.put(new ShopArmorIron.Boots(), ShopType.ARMOR);
 		items.put(new ShopArmorIron.Leggins(), ShopType.ARMOR);
-		
+
 		items.put(new ShopArmorGold.Helmet(), ShopType.ARMOR);
 		items.put(new ShopArmorGold.Chestplate(), ShopType.ARMOR);
 		items.put(new ShopArmorGold.Boots(), ShopType.ARMOR);
 		items.put(new ShopArmorGold.Leggins(), ShopType.ARMOR);
-		
+
 		items.put(new ShopArmorChain.Helmet(), ShopType.ARMOR);
 		items.put(new ShopArmorChain.Chestplate(), ShopType.ARMOR);
 		items.put(new ShopArmorChain.Boots(), ShopType.ARMOR);
 		items.put(new ShopArmorChain.Leggins(), ShopType.ARMOR);
-		
+
 		items.put(new ShopArmorDiamond.Helmet(), ShopType.ARMOR);
 		items.put(new ShopArmorDiamond.Chestplate(), ShopType.ARMOR);
 		items.put(new ShopArmorDiamond.Boots(), ShopType.ARMOR);
 		items.put(new ShopArmorDiamond.Leggins(), ShopType.ARMOR);
-		
-		items.put(new ShopArmorLetherRainbow(), ShopType.ARMOR);
-		
+
 		items.put(new ToyKnockBack(), ShopType.TOY);
 		items.put(new ToyJumpStick(), ShopType.TOY);
-		
+
 		items.put(new EffectHerz(), ShopType.EFFECT);
 		items.put(new EffectFlame(), ShopType.EFFECT);
-		items.put(new EffectBarierre(), ShopType.EFFECT);
-		
+
 		items.put(new PetSheep(), ShopType.PET);
 		items.put(new PetCow(), ShopType.PET);
 		items.put(new PetChicken(), ShopType.PET);
@@ -109,6 +107,10 @@ public class Shop {
 		items.put(new PetWolf(), ShopType.PET);
 		items.put(new PetPilzkuh(), ShopType.PET);
 		items.put(new PetRabbit(), ShopType.PET);
+		
+		items.put(new EffectBarierre(), ShopType.SPECIAL);
+		items.put(new ToyCoinTNT(), ShopType.SPECIAL);
+		items.put(new ShopArmorLetherRainbow(), ShopType.SPECIAL);
 	}
 
 	public static void openInit(CorePlayer player) {
@@ -145,20 +147,19 @@ public class Shop {
 			}
 		});
 
-//		gui.setButton(4, new GUIButton() {
-//			@Override
-//			public void onClick(InventoryClickEvent arg0) {
-//				//openShop(ShopType.NONE, cplayer);
-//			}
-//
-//			@Override
-//			public ItemStack getIcon() {
-//				return new ItemBuilder(Material.REDSTONE)
-//						.setName("§c§lDemnächst")
-//						.addLoreLine("§7Geplant: §6Eintellungen")
-//						.build();
-//			}
-//		});
+		gui.setButton(4, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				openShop(ShopType.SPECIAL, player);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.REDSTONE)
+						.setName("§6Special Items")
+						.build();
+			}
+		});
 
 		gui.setButton(5, new GUIButton() {
 			@Override
@@ -188,68 +189,68 @@ public class Shop {
 			}
 		});
 
-//		gui.setButton(8, new GUIButton() {
-//			@Override
-//			public void onClick(InventoryClickEvent arg0) {
-//				//openShop(ShopType.NONE, cplayer);
-//			}
-//
-//			@Override
-//			public ItemStack getIcon() {
-//				return new ItemBuilder(Material.CHEST)
-//						.setName("§c§lDemnächst")
-//						.addLoreLine("§7Geplant: §6Lotto")
-//						.build();
-//			}
-//		});
+		//		gui.setButton(8, new GUIButton() {
+		//			@Override
+		//			public void onClick(InventoryClickEvent arg0) {
+		//				//openShop(ShopType.NONE, cplayer);
+		//			}
+		//
+		//			@Override
+		//			public ItemStack getIcon() {
+		//				return new ItemBuilder(Material.CHEST)
+		//						.setName("§c§lDemnächst")
+		//						.addLoreLine("§7Geplant: §6Lotto")
+		//						.build();
+		//			}
+		//		});
 
 		gui.open();
 	}
 
 	private static void openShop(ShopType type, CorePlayer cplayer) {
 		GUI gui = new GUI(cplayer, "§b"+type.getInventoryName());
-//		for(int i = 45-9; i < 45; i++) {
-//			gui.setButton(i, new GUIButton() {
-//				@Override
-//				public void onClick(InventoryClickEvent arg0) {}
-//
-//				@Override
-//				public ItemStack getIcon() {
-//					return new ItemBuilder(Material.STAINED_GLASS_PANE)
-//							.setDurability((short)0)
-//							.setName(" ")
-//							.build();
-//				}
-//			});
-//		}
+		//		for(int i = 45-9; i < 45; i++) {
+		//			gui.setButton(i, new GUIButton() {
+		//				@Override
+		//				public void onClick(InventoryClickEvent arg0) {}
+		//
+		//				@Override
+		//				public ItemStack getIcon() {
+		//					return new ItemBuilder(Material.STAINED_GLASS_PANE)
+		//							.setDurability((short)0)
+		//							.setName(" ")
+		//							.build();
+		//				}
+		//			});
+		//		}
 		if(type == ShopType.PET) {
 			gui.setButton(40, new GUIButton() {
 				@Override
 				public void onClick(InventoryClickEvent arg0) {
 					PetUitls.stopFollow(cplayer.getBukkitPlayer());
 				}
-				
+
 				@Override
 				public ItemStack getIcon() {
 					return new ItemBuilder(Material.BARRIER).setName("§cHaustier Entfernen").build();
 				}
 			});
 		}
-		
+
 		if(type == ShopType.EFFECT) {
 			gui.setButton(40, new GUIButton() {
 				@Override
 				public void onClick(InventoryClickEvent arg0) {
 					CorePlayerData.setData(cplayer, "lobby", "effect", null);
 				}
-				
+
 				@Override
 				public ItemStack getIcon() {
 					return new ItemBuilder(Material.BARRIER).setName("§cEffecte Entfernen").build();
 				}
 			});
 		}
-		
+
 		gui.setButton(45, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 		gui.setButton(53, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 
@@ -281,20 +282,19 @@ public class Shop {
 			}
 		});
 
-//		gui.setButton(49, new GUIButton() {
-//			@Override
-//			public void onClick(InventoryClickEvent arg0) {
-//				//openShop(ShopType.NONE, cplayer);
-//			}
-//
-//			@Override
-//			public ItemStack getIcon() {
-//				return new ItemBuilder(Material.REDSTONE)
-//						.setName("§c§lDemnächst")
-//						.addLoreLine("§7Geplant: §6Eintellungen")
-//						.build();
-//			}
-//		});
+		gui.setButton(49, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				openShop(ShopType.SPECIAL, cplayer);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.REDSTONE)
+						.setName("§6Special Items")
+						.build();
+			}
+		});
 
 		gui.setButton(50, new GUIButton() {
 			@Override
@@ -324,20 +324,20 @@ public class Shop {
 			}
 		});
 
-//		gui.setButton(53, new GUIButton() {
-//			@Override
-//			public void onClick(InventoryClickEvent arg0) {
-//				//openShop(ShopType.NONE, cplayer);
-//			}
-//
-//			@Override
-//			public ItemStack getIcon() {
-//				return new ItemBuilder(Material.CHEST)
-//						.setName("§c§lDemnächst")
-//						.addLoreLine("§7Geplant: §6Lotto")
-//						.build();
-//			}
-//		});
+		//		gui.setButton(53, new GUIButton() {
+		//			@Override
+		//			public void onClick(InventoryClickEvent arg0) {
+		//				//openShop(ShopType.NONE, cplayer);
+		//			}
+		//
+		//			@Override
+		//			public ItemStack getIcon() {
+		//				return new ItemBuilder(Material.CHEST)
+		//						.setName("§c§lDemnächst")
+		//						.addLoreLine("§7Geplant: §6Lotto")
+		//						.build();
+		//			}
+		//		});
 
 		int t = 0;
 
@@ -354,9 +354,9 @@ public class Shop {
 								@Override
 								public void onClick(InventoryClickEvent event) {
 									Player player = (Player)event.getWhoClicked();
-									if(item.canBuying()) {
-										if(Coins.getCoins(player) >= item.getPrice()) {
-											if(!ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
+									if(Coins.getCoins(player) >= item.getPrice()) {
+										if(!ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
+											if(item.canBuying()) {
 												if(item.getItemID() != 105) {
 													Coins.action(CoinAction.REMOVE, player, item.getPrice());
 
@@ -377,18 +377,17 @@ public class Shop {
 													}
 												}
 											}else {
-												item.getAction(player);
-												//player.closeInventory();
+												cplayer.sendMessage("Shop", "§cDieses Item kann nicht gekauft werden!");
 											}
 										}else {
-											if(ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
-												item.getAction(player);
-											}else {
-												cplayer.sendMessage("Shop", "§cBitte überprüfe ob du genügen coins hast.");
-											}
+											item.getAction(player);
 										}
 									}else {
-										cplayer.sendMessage("Shop", "§cDieses Item kann nicht gekauft werden!");
+										if(ShopHandler.hasBought(type, cplayer.getUUID(), item)) {
+											item.getAction(player);
+										}else {
+											cplayer.sendMessage("Shop", "§cBitte überprüfe ob du genügen coins hast.");
+										}
 									}
 								}
 

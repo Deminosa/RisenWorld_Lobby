@@ -29,7 +29,7 @@ public class ToyKnockBack implements ShopItemBuilder{
 
 	@Override
 	public String getItemName() {
-		return "KockBack";
+		return "KnockBack";
 	}
 
 	@Override

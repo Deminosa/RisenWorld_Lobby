@@ -1,10 +1,14 @@
 package de.deminosa.lobby.main.timers;
 
-import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import net.minecraft.server.v1_8_R3.EntityVillager;
+import de.deminosa.core.builders.CoreTimer;
+import de.deminosa.core.utils.hologramm.Hologram;
+import de.deminosa.lobby.RisenWorld_Lobby;
 
 /*
  *	Class Create by Deminosa
@@ -14,21 +18,48 @@ import net.minecraft.server.v1_8_R3.EntityVillager;
  *
  */
 
-public class TestTimer implements Runnable{
+public class TestTimer implements CoreTimer{
 
-	private static HashMap<EntityVillager, Location> v = new HashMap<>();
 	int t = 0;
-
-	public static void freezz(EntityVillager vi, Location loc) {
-		if(!v.containsKey(vi)) {
-			v.put(vi, loc);
-		}
+	private static boolean isCreate = false;
+	private static Hologram holo = new Hologram(new Location(Bukkit.getWorld("world"), 57.5, 81, -29.5), "§b§k|||§6 Tagesbonus §b§k|||");
+	
+	public static void createHolo() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(!isCreate) {
+					holo.create();
+					isCreate = true;
+				}
+			}
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20*3);
 	}
-
+	
 	@Override
-	public void run() {
-		for(EntityVillager vi : v.keySet()) {
-			vi.getBukkitEntity().teleport(v.get(vi));
+	public void tick() {
+		Bukkit.getWorld("world").setTime(0);
+		
+		t++;
+		
+		if(t == 20*8) {
+			t = 0;
+			int r = ThreadLocalRandom.current().nextInt(4);
+			
+			switch(r) {
+			case 0:
+				holo.changeText("§b§k|||§6 Tagesbonus §b§k|||");
+				break;
+			case 1:
+				holo.changeText("§b§k|||§6 Jeden Tag 2x Chest §b§k|||");
+				break;
+			case 2:
+				holo.changeText("§b§k|||§6 Ich warte auf dich §b§k|||");
+				break;
+			case 3:
+				holo.changeText("§b§k|||§6 Klick mich, Ich bin Bio §b§k|||");
+				break;
+			}
 		}
 	}
 

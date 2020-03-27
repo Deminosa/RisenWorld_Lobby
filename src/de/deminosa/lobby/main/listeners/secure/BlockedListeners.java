@@ -1,6 +1,9 @@
 package de.deminosa.lobby.main.listeners.secure;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +21,12 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.deminosa.coinmanager.Coins;
+import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
+import de.deminosa.core.cache.CoreCache;
+import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.RisenWorld_Lobby;
+import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
 
 /*
 *	Class Create by Deminosa
@@ -68,7 +76,22 @@ public class BlockedListeners implements Listener{
 	
 	@EventHandler
 	public void onPickup(PlayerPickupItemEvent event) {
-		event.setCancelled(true);
+		if(event.getItem().getType() == EntityType.DROPPED_ITEM) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					for(String name : ToyCoinTNT.items) {
+						event.getPlayer().getInventory().removeItem(new ItemBuilder(Material.DIAMOND).setName(name).build());
+					}
+					int coins = ThreadLocalRandom.current().nextInt(3)+1;
+					CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Coins", "§a+"+coins);
+					Coins.action(CoinAction.ADD, event.getPlayer(), coins);
+					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
+				}
+			}.runTaskLater(RisenWorld_Lobby.getInstance(), 1);
+		}else {
+			event.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
