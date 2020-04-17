@@ -64,7 +64,7 @@ public class PetCow implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 12;
+		return 11;
 	}
 
 	@Override

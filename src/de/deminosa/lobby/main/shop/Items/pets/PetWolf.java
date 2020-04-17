@@ -42,7 +42,7 @@ public class PetWolf implements ShopItemBuilder{
 		Wolf animal = (Wolf) entity;
 		animal.setBaby();
 		
-		PetUitls.followPlayer(player, entity, 1.75, "k", 1, 2);
+		PetUitls.followPlayer(player, entity, 1.75, "a", 1, 2);
 	}
 
 	@Override
@@ -51,9 +51,9 @@ public class PetWolf implements ShopItemBuilder{
 				.setName("§6Wolf")
 				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
 				.addLoreLine("")
-				.addLoreLine("§7Fähigkeit: §6Sammelt Lottoscheine")
+				.addLoreLine("§7Fähigkeit: §6Sammelt Kisten")
 				.addLoreLine("§7Chance: §b1%")
-				.addLoreLine("§7Max: §b2 Lottoscheine")
+				.addLoreLine("§7Max: §b2 Kisten")
 				.build();
 	}
 
@@ -64,7 +64,7 @@ public class PetWolf implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 14;
+		return 29;
 	}
 
 	@Override

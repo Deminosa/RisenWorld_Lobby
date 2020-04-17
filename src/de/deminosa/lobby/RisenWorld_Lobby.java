@@ -147,7 +147,7 @@ public class RisenWorld_Lobby extends JavaPlugin {
 		tab[1] = "INFO §8- §bLobby: §aUpdate in der gesammten Lobby";
 		tab[2] = "INFO §8- §bNeue Games: §aTNT RUN §8- §aUHC §8- §aJumpLeague";
 		tab[3] = "INFO §8- §bTageslogin: §aErhalte eine Belohnung! Rechtsklick auf die Melone!";
-		tab[4] = "TIP §8- §bEs gibt Belohnungen bei Versteckten Messages.";
+		tab[4] = "TIPP §8- §bEs gibt Belohnungen bei Versteckten Messages.";
 		for(int i = 0; i<tab.length; i++){
 			all+=tab[i].length();
 		}

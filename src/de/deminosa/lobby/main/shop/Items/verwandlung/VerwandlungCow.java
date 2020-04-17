@@ -1,9 +1,10 @@
-package de.deminosa.lobby.main.shop.Items.pets;
+package de.deminosa.lobby.main.shop.Items.verwandlung;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Cow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
 import org.bukkit.inventory.ItemStack;
 
 import de.deminosa.core.builders.CorePlayer;
@@ -16,55 +17,48 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 *	Class Create by Deminosa
 *	YouTube: 	Deminosa
 * 	Web:	 	deminosa.de
-*	Create at: 	13:50:18 # 16.03.2020
+*	Create at: 	20:52:07 # 12.04.2020
 *
 */
 
-public class PetSheep implements ShopItemBuilder{
+public class VerwandlungCow implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 9850;
+		return 15850;
 	}
 
 	@Override
 	public String getItemName() {
-		return "Schaf";
+		return "Kuh";
 	}
 
 	@Override
 	public void getAction(Player player) {
-		PetUitls.stopFollow(player);
-		LivingEntity entity = player.getWorld().spawn(player.getLocation(), Sheep.class);
-		entity.setCustomNameVisible(true);
-		entity.setCustomName("§6" + player.getName() + "'s §7Haustier");
+		LivingEntity entity = player.getWorld().spawn(player.getLocation(), Cow.class);
+//		entity.setCustomNameVisible(true);
+//		entity.setCustomName("§6"+player.getPlayerListName());
 		
-		Sheep animal = (Sheep) entity;
-		animal.setBaby();
-		
-		PetUitls.followPlayer(player, entity, 1.75, "c", 2, 5);
+		VerwandlungsManager.follow(player, entity, 2.5d);
 	}
 
 	@Override
 	public ItemStack getIcon(CorePlayer player) {
-		return new ItemBuilder(Material.MONSTER_EGG).setDurability((short)91)
-				.setName("§6Schaf")
-				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
+		return new ItemBuilder(Material.MONSTER_EGG).setDurability((short)92)
+				.setName("§6"+getItemName())
 				.addLoreLine("")
-				.addLoreLine("§7Fähigkeit: §6Sammelt Coins")
-				.addLoreLine("§7Chance: §b2%")
-				.addLoreLine("§7Max: §b5 Coins")
+				.addLoreLine(ShopHandler.hasBought(ShopType.MAGIC, player.getUUID(), this) ? "§aIm besitzt" : "§cNicht Kaufbar")
 				.build();
 	}
 
 	@Override
 	public int getItemID() {
-		return 55250257;
+		return 96229913;
 	}
 
 	@Override
 	public int getSlot() {
-		return 13;
+		return 10;
 	}
 
 	@Override
@@ -74,6 +68,7 @@ public class PetSheep implements ShopItemBuilder{
 
 	@Override
 	public boolean canBuying() {
-		return true;
+		return false;
 	}
+
 }

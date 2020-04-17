@@ -5,6 +5,10 @@ import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.command.CoreCommand;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.core.utils.warps.WarpManager;
+import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungCow;
+import de.deminosa.lobby.main.shop.api.ShopType;
 import de.deminosa.lobby.utils.EntityControll;
 import de.deminosa.lobby.utils.GameChange;
 
@@ -56,7 +60,7 @@ public class Lobby implements CoreCommand{
 				WarpManager.createWarp(player, "spawn");
 				player.sendMessage(prefix, "§aSpawn Set/Change!");
 			}else if(args[1].equalsIgnoreCase("test") || args[1].equalsIgnoreCase("-t")) {
-				EntityControll.addEntity(player.getBukkitPlayer(), "day.settings");
+				ShopHandler.setBought(ShopType.MAGIC, new VerwandlungCow(), player.getUUID());
 			}else if(args[1].equalsIgnoreCase("setKnockFFA")) {
 				WarpManager.createWarp(player, "KnockFFA");
 				player.sendMessage(prefix, "§aKnockFFA Set/Change!");

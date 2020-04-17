@@ -1,11 +1,13 @@
 package de.deminosa.lobby.main.shop.Items.special;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -14,6 +16,7 @@ import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.IDManager.IDManager;
 import de.deminosa.core.utils.hologramm.Hologram;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
+import de.deminosa.core.utils.mathmanager.CoreMath;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.shop.ShopHandler;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
@@ -32,8 +35,14 @@ import net.md_5.bungee.api.chat.ClickEvent.Action;
 
 public class ToyCoinTNT implements ShopItemBuilder{
 
-	public static ArrayList<String> items = new ArrayList<>();
+	public static ArrayList<String> CoinUUID = new ArrayList<>();
+	public static ArrayList<String> LottoUUID = new ArrayList<>();
+	public static ArrayList<String> ChestUUID = new ArrayList<>();
 	public static ArrayList<Location> locs = new ArrayList<>();
+	
+	public static HashMap<Player, Integer> coins = new HashMap<>();
+	public static HashMap<Player, Integer> lotto = new HashMap<>();
+	public static HashMap<Player, Integer> chest = new HashMap<>();
 	
 	@Override
 	public int getPrice() {
@@ -42,24 +51,23 @@ public class ToyCoinTNT implements ShopItemBuilder{
 
 	@Override
 	public String getItemName() {
-		return "Coin Bomb";
+		return "Wunder Bombe";
 	}
 
 	@Override
 	public void getAction(Player player) {
 		Location loc = player.getLocation().clone();
-		ShopHandler.removeBought(ShopType.TOY, player.getUniqueId().toString(), this);
+		ShopHandler.removeBought(ShopType.SPECIAL, player.getUniqueId().toString(), this);
 		
 		player.closeInventory();
 		
 		for(Player players : Bukkit.getOnlinePlayers()) {
-			String ID = IDManager.generateID(8);
-			TextComponent message = new TextComponent("§8§l[§b§l!§8§l] §6"+player.getName() + " §7hat eine §bCoinBomb§7 Plaziert!");
+			TextComponent message = new TextComponent("§8§l[§b§l!§8§l] §6"+player.getName() + " §7hat eine §bWunder Bombe§7 Plaziert!");
 			message.setClickEvent(new ClickEvent(Action.RUN_COMMAND, ""));
 			players.spigot().sendMessage(message);
 		}
 		loc.add(0,5,0);
-		Hologram holo = new Hologram(loc, "§b§k|||||§6 Coins Bomb §b§k|||||");
+		Hologram holo = new Hologram(loc, "§b§k|||||§6 Wunder Bombe §b§k|||||");
 		holo.create();
 		new BukkitRunnable() {
 			@Override
@@ -75,7 +83,7 @@ public class ToyCoinTNT implements ShopItemBuilder{
 
 	@Override
 	public ItemStack getIcon(CorePlayer player) {
-		return new ItemBuilder(Material.CHEST).setName("§6Coin Bomb")
+		return new ItemBuilder(Material.CHEST).setName("§6Wunder Bombe")
 				.addLoreLine("§cNicht Kaufbar!")
 				.addLoreLine(" ")
 				.addLoreLine("§7Benutze dies um eine Bombe platzen")
@@ -109,9 +117,19 @@ public class ToyCoinTNT implements ShopItemBuilder{
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				String name = IDManager.generateID(8);
-				items.add(name);
-				loc.getWorld().dropItemNaturally(loc, new ItemBuilder(Material.DIAMOND).setName(name).build());
+				if(CoreMath.chance(2)) {
+					String name = IDManager.generateID(8);
+					Entity e = loc.getWorld().dropItemNaturally(loc, new ItemBuilder(Material.NETHER_STAR).setName(name).build());
+					ChestUUID.add(e.getUniqueId().toString());
+				}else if(CoreMath.chance(2)) {
+					String name = IDManager.generateID(8);
+					Entity e = loc.getWorld().dropItemNaturally(loc, new ItemBuilder(Material.EMERALD).setName(name).build());
+					LottoUUID.add(e.getUniqueId().toString());
+				}else {
+					String name = IDManager.generateID(8);
+					Entity e = loc.getWorld().dropItemNaturally(loc, new ItemBuilder(Material.DIAMOND).setName(name).build());
+					CoinUUID.add(e.getUniqueId().toString());
+				}
 			}
 		}.runTaskLater(RisenWorld_Lobby.getInstance(), 2*i);
 	}

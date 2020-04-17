@@ -51,7 +51,7 @@ public class PetRabbit implements ShopItemBuilder{
 				.setName("§6Kaninchen")
 				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
 				.addLoreLine("")
-				.addLoreLine("§7Fähigkeit: §6Sammelt Coins")
+				.addLoreLine("§7Fähigkeit: §6Sammelt Lottoscheine")
 				.addLoreLine("§7Chance: §b1%")
 				.addLoreLine("§7Max: §b2 Lottoscheine")
 				.build();
@@ -64,7 +64,7 @@ public class PetRabbit implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 16;
+		return 20;
 	}
 
 	@Override

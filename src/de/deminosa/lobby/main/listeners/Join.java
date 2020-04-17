@@ -10,7 +10,9 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
@@ -23,6 +25,7 @@ import de.deminosa.core.utils.warps.WarpManager;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.agb.AGB;
 import de.deminosa.lobby.main.shop.Items.pets.PetUitls;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungsManager;
 import de.deminosa.lobby.main.timers.TestTimer;
 import de.deminosa.lobby.utils.GameChange;
 import de.deminosa.lobby.utils.Utils;
@@ -58,16 +61,12 @@ public class Join implements Listener{
 
 			@Override
 			public void run() {
-				if(!event.getPlayer().getName().equalsIgnoreCase("Deminosa")) {
-					if(var.Chance(50)) {
-						//						event.getPlayer().kickPlayer("§bEmmy §8|\n"
-						//								+ "§7Du wurdest für auffälliges Verhalten vom Server Geworfen!\n"
-						//								+ "§6\n"
-						//								+ "§6Sollte dies ein Fehler sein, melde dich beim Support!");
-					}
-				}
+				CoreCache.getCorePlayer(event.getPlayer()).sendTitle(0, 20*5, 5, "§6Willkommen", "§7" + event.getPlayer().getName());
+//				String[] s = {"§0","§6Coins","§b0 ", "§1", "§6Lottoscheine", "§b0  ", "§2", "§6Kisten", "§b0"};
+				event.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+				event.getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
 			}
-		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20*10);
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20*2);
 	}
 
 	@EventHandler
@@ -95,6 +94,7 @@ public class Join implements Listener{
 	public void onQuit(PlayerQuitEvent event) {
 		event.setQuitMessage("");
 		PetUitls.stopFollow(event.getPlayer());
+		VerwandlungsManager.stopFollow(event.getPlayer());
 	}
 
 	private void getItems(Player player) {

@@ -2,6 +2,9 @@ package de.deminosa.lobby.main.commands;
 
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.builders.command.CoreCommand;
+import de.deminosa.lobby.main.reedem.ReedemHandler;
+import de.deminosa.lobby.main.reedem.ReedemType;
+import de.deminosa.lobby.main.shop.api.ShopType;
 
 /*
  *	Class Create by Deminosa
@@ -13,11 +16,11 @@ import de.deminosa.core.builders.command.CoreCommand;
 
 public class ReedemCommand implements CoreCommand{
 
-	private String prefix = "Reedem";
+	private String prefix = "Redeem";
 
 	@Override
 	public String command() {
-		return "reedem";
+		return "code";
 	}
 
 	@Override
@@ -42,28 +45,37 @@ public class ReedemCommand implements CoreCommand{
 		}
 		if(args.length == 2) {
 			if(args[1].equalsIgnoreCase("help")) {
-				// /reedem create <player|name> <action> <value>
-				player.sendMessage(prefix, "/reedem create <player|name> <type/Action> <value>");
-				player.sendMessage(prefix, "/reedem action §7Zeigt dir eine liste an.");
-				player.sendMessage(prefix, "/reedem delete <UID|ID> [value]");
-			}else if(args[1].equalsIgnoreCase("action")) {
-				player.sendMessage(prefix, "§e========[§bAction§e]========");
-				
+				// /reedem create <type> <value>
+				player.sendMessage(prefix, "/code create <type> <value>");
+				player.sendMessage(prefix, "/code types");
+			}else if(args[1].equalsIgnoreCase("types")) {
+				player.sendMessage(prefix, "§e========[§bTypes§e]========");
+				for(ReedemType type : ReedemType.values()) {
+					player.sendMessage(prefix, "§a" + type.name());
+				}
 			}else {
 				runNoPerms(player, args);
 			}
 		}
 		if(args.length == 4) {
-
-		}
-		if(args.length == 5) {
-
+			if(args[1].equalsIgnoreCase("create")) {
+				ReedemType type = ReedemType.valueOf(args[2].toUpperCase());
+				int value = Integer.valueOf(args[3]);
+				
+				ReedemHandler.create(player, type, value);
+			}
 		}
 	}
 
 	@Override
-	public boolean runNoPerms(CorePlayer arg0, String[] arg1) {
-		return false;
+	public boolean runNoPerms(CorePlayer player, String[] args) {
+		if(args.length == 1) {
+			player.sendMessage("Redeem", "§c/code <id>");
+		}
+		if(args.length == 2) {
+			ReedemHandler.use(player, args[1]);
+		}
+		return true;
 	}
 
 }

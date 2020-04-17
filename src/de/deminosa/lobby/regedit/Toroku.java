@@ -1,19 +1,15 @@
 package de.deminosa.lobby.regedit;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.deminosa.core.Core;
 import de.deminosa.core.cache.CoreCache;
-import de.deminosa.core.utils.hologramm.Hologram;
 import de.deminosa.core.utils.mysql.ColumType;
 import de.deminosa.core.utils.mysql.MySQL;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.border.LobbyBorder;
 import de.deminosa.lobby.main.commands.DatenBankCommand;
 import de.deminosa.lobby.main.commands.Lobby;
+import de.deminosa.lobby.main.commands.ReedemCommand;
 import de.deminosa.lobby.main.creates.CreatesManager;
 import de.deminosa.lobby.main.daylogin.listeners.VillagerListener;
 import de.deminosa.lobby.main.listeners.Join;
@@ -55,6 +51,7 @@ public class Toroku {
 		System.out.print("=====================[CMD]==============================");
 		Core.getInstance().registerCommand(new Lobby());
 		Core.getInstance().registerCommand(new DatenBankCommand());
+		Core.getInstance().registerCommand(new ReedemCommand());
 		System.out.print("=====================[END]==============================");
 		
 		CoreCache.regCoreTimer(new ParticelTimer());
@@ -62,9 +59,10 @@ public class Toroku {
 		LobbyBorder.setWorldBoarder();
 		
 		Shop.init();
+		
 	}
 	
-	private static void addEvent(Listener listener) {
+	public static void addEvent(Listener listener) {
 		RisenWorld_Lobby.getInstance().getServer().getPluginManager().registerEvents(listener, RisenWorld_Lobby.getInstance());
 	}
 	
@@ -85,9 +83,17 @@ public class Toroku {
 		ColumType[] ShopType = {ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.INT};
 		MySQL.createTable("Shop", ShopColum, ShopType);
 		
-		String[] reedemColum = {"ID", "UUID", "UID", "Action", "arguments"};
-		ColumType[] reedemType = {ColumType.INT, ColumType.VARCHAR_128, ColumType.VARCHAR_32, ColumType.VARCHAR_32, ColumType.VARCHAR_2048};
+		String[] reedemColum = {"UID", "type", "args"};
+		ColumType[] reedemType = {ColumType.VARCHAR_32, ColumType.VARCHAR_32, ColumType.VARCHAR_2048};
 		MySQL.createTable("Reedem", reedemColum, reedemType);
+		
+		String[] AchivmentColum = {"UUID", "type"};
+		ColumType[] AchivmentType = {ColumType.VARCHAR_128, ColumType.VARCHAR_64};
+		MySQL.createTable("Achivment", AchivmentColum, AchivmentType);
+		
+		String[] AnalyseColum = {"UUID", "DATA"};
+		ColumType[] AnalyseType = {ColumType.VARCHAR_128, ColumType.VARCHAR_2048};
+		MySQL.createTable("DATA", AnalyseColum, AnalyseType);
 	}
 	
 	

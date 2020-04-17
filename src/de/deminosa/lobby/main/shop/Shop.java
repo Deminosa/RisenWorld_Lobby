@@ -39,6 +39,10 @@ import de.deminosa.lobby.main.shop.Items.special.ShopArmorLetherRainbow;
 import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
 import de.deminosa.lobby.main.shop.Items.toy.ToyJumpStick;
 import de.deminosa.lobby.main.shop.Items.toy.ToyKnockBack;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungChicken;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungCow;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungPig;
+import de.deminosa.lobby.main.shop.Items.verwandlung.VerwandlungsManager;
 import de.deminosa.lobby.main.shop.api.ShopInfo;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
@@ -53,7 +57,7 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 
 public class Shop {
 
-	private static HashMap<ShopItemBuilder, ShopType> items = new HashMap<>();
+	public static HashMap<ShopItemBuilder, ShopType> items = new HashMap<>();
 	@SuppressWarnings("unused")
 	private static String table = "LobbyShop_", ItemID = "ItemID", buy = "Bought", InUse = "InUse", OK = "OK";
 
@@ -111,13 +115,16 @@ public class Shop {
 		items.put(new EffectBarierre(), ShopType.SPECIAL);
 		items.put(new ToyCoinTNT(), ShopType.SPECIAL);
 		items.put(new ShopArmorLetherRainbow(), ShopType.SPECIAL);
+		
+		items.put(new VerwandlungCow(), ShopType.MAGIC);
+		items.put(new VerwandlungChicken(), ShopType.MAGIC);
+		items.put(new VerwandlungPig(), ShopType.MAGIC);
 	}
 
 	public static void openInit(CorePlayer player) {
-		GUI gui = new GUI(player, "§6Shop §0-> §eSelect...", 9);
+		GUI gui = new GUI(player, "§6Shop §0-> §eShop", 9);
 
 		gui.setButton(0, new ShopInfo.Balance(player.getBukkitPlayer()));
-		gui.setButton(8, new ShopInfo.Balance(player.getBukkitPlayer()));
 
 		gui.setButton(2, new GUIButton() {
 			@Override
@@ -150,20 +157,6 @@ public class Shop {
 		gui.setButton(4, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
-				openShop(ShopType.SPECIAL, player);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.REDSTONE)
-						.setName("§6Special Items")
-						.build();
-			}
-		});
-
-		gui.setButton(5, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
 				openShop(ShopType.PET, player);
 			}
 
@@ -175,7 +168,7 @@ public class Shop {
 			}
 		});
 
-		gui.setButton(6, new GUIButton() {
+		gui.setButton(5, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
 				openShop(ShopType.TOY, player);
@@ -185,6 +178,34 @@ public class Shop {
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.STICK)
 						.setName("§6Spielzeuge")
+						.build();
+			}
+		});
+		
+		gui.setButton(7, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				openShop(ShopType.MAGIC, player);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.BLAZE_ROD)
+						.setName(ShopType.MAGIC.getInventoryName())
+						.build();
+			}
+		});
+		
+		gui.setButton(8, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				openShop(ShopType.SPECIAL, player);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.REDSTONE)
+						.setName(ShopType.SPECIAL.getInventoryName())
 						.build();
 			}
 		});
@@ -235,6 +256,10 @@ public class Shop {
 					return new ItemBuilder(Material.BARRIER).setName("§cHaustier Entfernen").build();
 				}
 			});
+			
+			gui.getInventory().setItem(10, new ItemBuilder(Material.SIGN).setName("§6Coins Sammeln").build());
+			gui.getInventory().setItem(19, new ItemBuilder(Material.SIGN).setName("§6Lottoscheine Sammeln").build());
+			gui.getInventory().setItem(28, new ItemBuilder(Material.SIGN).setName("§6Kisten Sammeln").build());
 		}
 
 		if(type == ShopType.EFFECT) {
@@ -252,7 +277,6 @@ public class Shop {
 		}
 
 		gui.setButton(45, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
-		gui.setButton(53, new ShopInfo.Balance(cplayer.getBukkitPlayer()));
 
 		gui.setButton(47, new GUIButton() {
 			@Override
@@ -277,26 +301,12 @@ public class Shop {
 			@Override
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.POTION)
-						.setName("§6Effecte")
+						.setName("§6Effekte")
 						.build();
 			}
 		});
 
 		gui.setButton(49, new GUIButton() {
-			@Override
-			public void onClick(InventoryClickEvent arg0) {
-				openShop(ShopType.SPECIAL, cplayer);
-			}
-
-			@Override
-			public ItemStack getIcon() {
-				return new ItemBuilder(Material.REDSTONE)
-						.setName("§6Special Items")
-						.build();
-			}
-		});
-
-		gui.setButton(50, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
 				openShop(ShopType.PET, cplayer);
@@ -310,7 +320,7 @@ public class Shop {
 			}
 		});
 
-		gui.setButton(51, new GUIButton() {
+		gui.setButton(50, new GUIButton() {
 			@Override
 			public void onClick(InventoryClickEvent arg0) {
 				openShop(ShopType.TOY, cplayer);
@@ -320,6 +330,45 @@ public class Shop {
 			public ItemStack getIcon() {
 				return new ItemBuilder(Material.STICK)
 						.setName("§6Spielzeuge")
+						.build();
+			}
+		});
+		
+		gui.setButton(52, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				gui.setButton(40, new GUIButton() {
+					@Override
+					public void onClick(InventoryClickEvent arg0) {
+						VerwandlungsManager.stopFollow(cplayer.getBukkitPlayer());
+					}
+
+					@Override
+					public ItemStack getIcon() {
+						return new ItemBuilder(Material.BARRIER).setName("§cVerwandlung Aufheben").build();
+					}
+				});
+				openShop(ShopType.MAGIC, cplayer);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.BLAZE_ROD)
+						.setName(ShopType.MAGIC.getInventoryName())
+						.build();
+			}
+		});
+		
+		gui.setButton(53, new GUIButton() {
+			@Override
+			public void onClick(InventoryClickEvent arg0) {
+				openShop(ShopType.SPECIAL, cplayer);
+			}
+
+			@Override
+			public ItemStack getIcon() {
+				return new ItemBuilder(Material.REDSTONE)
+						.setName("§6Ausergewöhnlich")
 						.build();
 			}
 		});

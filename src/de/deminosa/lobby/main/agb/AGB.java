@@ -63,7 +63,7 @@ public class AGB {
 						return new ItemBuilder(Material.BOOK_AND_QUILL)
 								.setName("§6Nutzungsbedingungen")
 								.addLoreLine("§7Mit dem Klick auf der §aGrüne Glassplatte §7(Links)")
-								.addLoreLine("§6akzeptierst §7du unsere §6Regeln §7und die §6AGB's")
+								.addLoreLine("§6akzeptierst §7du unsere §6Regeln §7und die §6ANB's")
 								.addLoreLine("§7Wenn du damit §c§lnicht §7einverstanden bist,")
 								.addLoreLine("§7Dann klicke bitte auf die §cRote Glassplatte §7(Rechts)")
 								.addLoreLine("")

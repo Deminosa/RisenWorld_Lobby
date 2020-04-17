@@ -19,10 +19,12 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
+import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.RisenWorld_Lobby;
@@ -77,18 +79,49 @@ public class BlockedListeners implements Listener{
 	@EventHandler
 	public void onPickup(PlayerPickupItemEvent event) {
 		if(event.getItem().getType() == EntityType.DROPPED_ITEM) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					for(String name : ToyCoinTNT.items) {
-						event.getPlayer().getInventory().removeItem(new ItemBuilder(Material.DIAMOND).setName(name).build());
-					}
+			for(String name : ToyCoinTNT.CoinUUID) {
+				if(event.getItem().getUniqueId().toString().equals(name)) {
 					int coins = ThreadLocalRandom.current().nextInt(3)+1;
-					CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Coins", "§a+"+coins);
-					Coins.action(CoinAction.ADD, event.getPlayer(), coins);
+					if(!ToyCoinTNT.coins.containsKey(event.getPlayer())) {
+						ToyCoinTNT.coins.put(event.getPlayer(), coins);
+					}else {
+						ToyCoinTNT.coins.put(event.getPlayer(), ToyCoinTNT.coins.get(event.getPlayer()) + coins);
+					}
+					
 					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
+				}else {
+					event.setCancelled(true);
 				}
-			}.runTaskLater(RisenWorld_Lobby.getInstance(), 1);
+			}
+			for(String name : ToyCoinTNT.LottoUUID) {
+				if(event.getItem().getUniqueId().toString().equals(name)) {
+					int coins = ThreadLocalRandom.current().nextInt(2)+1;
+					if(!ToyCoinTNT.lotto.containsKey(event.getPlayer())) {
+						ToyCoinTNT.lotto.put(event.getPlayer(), coins);
+					}else {
+						ToyCoinTNT.lotto.put(event.getPlayer(), ToyCoinTNT.lotto.get(event.getPlayer()) + coins);
+					}
+					
+					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
+				}else {
+					event.setCancelled(true);
+				}
+			}
+			for(String name : ToyCoinTNT.ChestUUID) {
+				if(event.getItem().getUniqueId().toString().equals(name)) {
+					int coins = ThreadLocalRandom.current().nextInt(2)+1;
+					if(!ToyCoinTNT.chest.containsKey(event.getPlayer())) {
+						ToyCoinTNT.chest.put(event.getPlayer(), coins);
+					}else {
+						ToyCoinTNT.chest.put(event.getPlayer(), ToyCoinTNT.chest.get(event.getPlayer()) + coins);
+					}
+					
+					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
+				}else {
+					event.setCancelled(true);
+				}
+			}
+			event.getItem().remove();
 		}else {
 			event.setCancelled(true);
 		}

@@ -64,7 +64,7 @@ public class PetChicken implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 13;
+		return 21;
 	}
 
 	@Override

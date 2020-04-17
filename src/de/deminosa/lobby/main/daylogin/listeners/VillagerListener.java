@@ -38,6 +38,8 @@ public class VillagerListener implements Listener{
 	public void openInvVillager(PlayerInteractEvent event) {
 		Block b = event.getClickedBlock();
 		
+		if(b == null) return;
+		
 		if(b.getLocation().equals(new Location(Bukkit.getWorld("world"), 57, 81, -30))) {
 			new BukkitRunnable() {
 				@Override

@@ -11,11 +11,12 @@ package de.deminosa.lobby.main.shop.api;
 public enum ShopType {
 
 	ARMOR("Rüstung"),
-	EFFECT("Effecte"),
+	EFFECT("Effekte"),
 	TOY("Spielzeuge"),
 	PET("Haustiere"),
-	SPECIAL("Special Items"),
-	NONE("§6Sector Auswählen");
+	SPECIAL("§6Ausergewöhnlich"),
+	MAGIC("§6Verwandlungszauber"),
+	NONE("§6Shop");
 	
 	String invName;
 	

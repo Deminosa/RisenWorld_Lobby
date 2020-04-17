@@ -53,6 +53,11 @@ public class Particel {
 		}
 	}
 	
+	
+	public Location getLocation() {
+		return location;
+	}
+	
 	public void drawBan(EnumParticle pat2, EnumParticle pat3) {
     	Location loc = this.location;
     	EnumParticle pat = this.particletype;

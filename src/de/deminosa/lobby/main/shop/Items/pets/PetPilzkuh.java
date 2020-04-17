@@ -42,7 +42,7 @@ public class PetPilzkuh implements ShopItemBuilder{
 		MushroomCow animal = (MushroomCow) entity;
 		animal.setBaby();
 		
-		PetUitls.followPlayer(player, entity, 1.75, "c", 2, 5);
+		PetUitls.followPlayer(player, entity, 1.75, "a", 1, 2);
 	}
 
 	@Override
@@ -51,9 +51,9 @@ public class PetPilzkuh implements ShopItemBuilder{
 				.setName("§6PilzKuh")
 				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
 				.addLoreLine("")
-				.addLoreLine("§7Fähigkeit: §6Sammelt Coins")
-				.addLoreLine("§7Chance: §b2%")
-				.addLoreLine("§7Max: §b5 Coins")
+				.addLoreLine("§7Fähigkeit: §6Sammelt Kisten")
+				.addLoreLine("§7Chance: §b1%")
+				.addLoreLine("§7Max: §b2 Kisten")
 				.build();
 	}
 
@@ -64,7 +64,7 @@ public class PetPilzkuh implements ShopItemBuilder{
 
 	@Override
 	public int getSlot() {
-		return 15;
+		return 30;
 	}
 
 	@Override

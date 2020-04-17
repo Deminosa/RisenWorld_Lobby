@@ -1,11 +1,14 @@
 package de.deminosa.lobby.main.listeners.LobbyItems;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -25,12 +28,12 @@ import de.deminosa.lobby.utils.Utils;
 import jump.Jump;
 
 /*
-*	Class Create by Deminosa
-*	YouTube: 	Deminosa
-* 	Web:	 	deminosa.de
-*	Create at: 	17:49:17 # 25.09.2019
-*
-*/
+ *	Class Create by Deminosa
+ *	YouTube: 	Deminosa
+ * 	Web:	 	deminosa.de
+ *	Create at: 	17:49:17 # 25.09.2019
+ *
+ */
 
 public class Games implements Listener{
 
@@ -47,92 +50,74 @@ public class Games implements Listener{
 					player.sendMessage("§bEmmy", "§cJ'n'R Konnte nicht gestartet werden!");
 				}
 			}
+
 			if(event.getItem().equals(Utils.getGAMES())) {
-				GUI gui = new GUI(player, "§6Games", 54-9);
-				
+				GUI gui = new GUI(player, "§6Games", 9);
+
 				gui.setButton(0, new GUIButton() {
 					String warp = "SkyPvP";
 					@Override
 					public void onClick(InventoryClickEvent event) {
 						Player bukkitPlayer = (Player)event.getWhoClicked();
-						teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+						Utils.connectTo(bukkitPlayer, "SkyPvP-1");
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
-						return new ItemBuilder(Material.IRON_SWORD).setName("§6"+warp+"+").build();
+						return new ItemBuilder(Material.IRON_SWORD).setName("§6"+warp+"+")
+								.addLoreLine("§7Direkte Verbindung zum Server.")
+								.build();
 					}
 				});
-				
-				gui.setButton(8, new GUIButton() {
+
+				gui.setButton(1, new GUIButton() {
 					String warp = "SkyBlock";
 					@Override
 					public void onClick(InventoryClickEvent event) {
 						if(!warp.equalsIgnoreCase("")) {
 							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							Utils.connectTo(bukkitPlayer, "SkyBlock-1");
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
 						return new ItemBuilder(Material.GRASS).setName("§6"+warp+"+")
-								.addLoreLine("§7Derzeitig nur für das Team")
+								.addLoreLine("§7Direkte Verbindung zum Server.")
 								.addLoreLine("")
-								.addLoreLine("§940% Fertig")
+								.addLoreLine("§cDerzeitig nur für das Team")
+								.addLoreLine("")
+								.addLoreLine("§942% Fertig")
 								.build();
 					}
 				});
-				
-				gui.setButton(11, new GUIButton() {
-					String warp = "";
+
+				gui.setButton(3, new GUIButton() {
 					@Override
 					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+						if(event.getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+							String warp = "KnockFFA";
+							if(!warp.equalsIgnoreCase("")) {
+								Player bukkitPlayer = (Player)event.getWhoClicked();
+								teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							}
+						}else {
+							Utils.connectTo(player.getBukkitPlayer(), "KnockFFA-1");
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
-						return new ItemBuilder(Material.BARRIER).setName("§6"+warp).build();
+						return new ItemBuilder(Material.STICK).addEnchant(Enchantment.KNOCKBACK, 1)
+								.setName("§6KnockFFA")
+								.addLoreLine("")
+								.addLoreLine("§bShift + Rechtsklick:")
+								.addLoreLine("§7Direkte Verbindung zum Server.")
+								.build();
 					}
 				});
-				
-				gui.setButton(15, new GUIButton() {
-					String warp = "";
-					@Override
-					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
-						}
-					}
-					
-					@Override
-					public ItemStack getIcon() {
-						return new ItemBuilder(Material.BARRIER).setName("§6"+warp).build();
-					}
-				});
-				
-				gui.setButton(18, new GUIButton() {
-					@Override
-					public void onClick(InventoryClickEvent event) {
-						String warp = "KnockFFA";
-						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
-						}
-					}
-					
-					@Override
-					public ItemStack getIcon() {
-						return new ItemBuilder(Material.STICK).addEnchant(Enchantment.KNOCKBACK, 1).setName("§6KnockFFA").build();
-					}
-				});
-				
-				gui.setButton(22, new GUIButton() {
+
+				gui.setButton(8, new GUIButton() {
 					@Override
 					public void onClick(InventoryClickEvent event) {
 						String warp = "spawn";
@@ -141,32 +126,40 @@ public class Games implements Listener{
 							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
 						return new ItemBuilder(Material.EYE_OF_ENDER).setName("§6Spawn").build();
 					}
 				});
-				
-				gui.setButton(26, new GUIButton() {
+
+				gui.setButton(4, new GUIButton() {
 					String warp = "TNT-Run";
 					@Override
 					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+						if(event.getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+							if(!warp.equalsIgnoreCase("")) {
+								Player bukkitPlayer = (Player)event.getWhoClicked();
+								teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							}
+						}else {
+							int i = ThreadLocalRandom.current().nextInt(5)+1;
+							Utils.connectTo(player.getBukkitPlayer(), "TNT-Run-"+i);
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
 						return new ItemBuilder(Material.TNT).setName("§6"+warp)
 								.addLoreLine("§eOpen Beta Programm")
+								.addLoreLine(" ")
+								.addLoreLine("§bShift + Rechtsklick:")
+								.addLoreLine("§7Direkte Verbindung zum Server.")
 								.build();
 					}
 				});
-				
-				gui.setButton(29, new GUIButton() {
+
+				gui.setButton(6, new GUIButton() {
 					String warp = "";
 					@Override
 					public void onClick(InventoryClickEvent event) {
@@ -175,64 +168,43 @@ public class Games implements Listener{
 							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
 						return new ItemBuilder(Material.BARRIER).setName("§6"+warp).build();
 					}
 				});
-				
-				gui.setButton(33, new GUIButton() {
-					String warp = "";
-					@Override
-					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							Player bukkitPlayer = (Player)event.getWhoClicked();
-							teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
-						}
-					}
-					
-					@Override
-					public ItemStack getIcon() {
-						return new ItemBuilder(Material.BARRIER).setName("§6"+warp).build();
-					}
-				});
-				
-				gui.setButton(36, new GUIButton() {
-					String warp = "JL";
-					@Override
-					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							event.getWhoClicked();
-						}
-					}
-					
-					@Override
-					public ItemStack getIcon() {
-						return new ItemBuilder(Material.FIREWORK).setName("§6JumpLegue").build();
-					}
-				});
-				
-				gui.setButton(44, new GUIButton() {
+
+				gui.setButton(5, new GUIButton() {
 					String warp = "UHC";
 					@Override
 					public void onClick(InventoryClickEvent event) {
-						if(!warp.equalsIgnoreCase("")) {
-							event.getWhoClicked();
+						if(event.getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+							if(!warp.equalsIgnoreCase("")) {
+								Player bukkitPlayer = (Player)event.getWhoClicked();
+								teleport(CoreCache.getCorePlayer(bukkitPlayer), warp);
+							}
+						}else {
+							int i = ThreadLocalRandom.current().nextInt(3)+1;
+							Utils.connectTo(player.getBukkitPlayer(), "UHC-"+i);
 						}
 					}
-					
+
 					@Override
 					public ItemStack getIcon() {
-						return new ItemBuilder(Material.NETHER_STAR).setName("§6"+warp).build();
+						return new ItemBuilder(Material.NETHER_STAR).setName("§6"+warp)
+								.addLoreLine(" ")
+								.addLoreLine("§bShift + Rechtsklick:")
+								.addLoreLine("§7Direkte Verbindung zum Server.")
+								.build();
 					}
 				});
-				
+
 				gui.open();
 			}
 		}
 	}
-	
+
 	private static void teleport(CorePlayer player, String warp) {
 		player.getBukkitPlayer().closeInventory();
 		Vector v = player.getBukkitPlayer().getVelocity().multiply(2).setY(5);
