@@ -21,7 +21,7 @@ public interface ShopItemBuilder {
 	public ItemStack getIcon(CorePlayer player);
 	public int getItemID();
 	public int getSlot();
-	public int getItemLevel();
 	public boolean canBuying();
+	public EconomyType getEconomyType();
 	
 }

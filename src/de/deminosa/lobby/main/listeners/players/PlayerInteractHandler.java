@@ -1,9 +1,6 @@
 package de.deminosa.lobby.main.listeners.players;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,7 +43,7 @@ public class PlayerInteractHandler implements Listener{
 						.setSkullOwner(event.getRightClicked().getName())
 						.addLoreLine("")
 						.addLoreLine("§7Coins: §b" + Coins.getCoins((Player)event.getRightClicked()))
-						.addLoreLine("§7Lottoscheine: §b" + Coins.getLotto((Player)event.getRightClicked()))
+						.addLoreLine("§7Token: §b" + Coins.getToken((Player)event.getRightClicked()))
 						.addLoreLine("§7Kisten: §b" + Coins.getChest((Player)event.getRightClicked()))
 						.build();
 			}

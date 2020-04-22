@@ -9,9 +9,10 @@ import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.cache.CorePlayerData;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
-import de.deminosa.lobby.main.shop.Items.effecte.api.EFFECT_TYPE;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 
 /*
 *	Class Create by Deminosa
@@ -25,7 +26,7 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 10000;
+		return 100;
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class EffectBarierre implements ShopItemBuilder{
 
 	@Override
 	public void getAction(Player player) {
-		CorePlayerData.setData(CoreCache.getCorePlayer(player), "lobby", "effect", EFFECT_TYPE.Barierren.name());
+		CorePlayerData.setData(CoreCache.getCorePlayer(player), "lobby", "effect", EnumParticle.BARRIER.name());
 	}
 
 	@Override
@@ -57,9 +58,7 @@ public class EffectBarierre implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
-	}
+	public EconomyType getEconomyType() {return EconomyType.TOKENS;}
 
 	@Override
 	public boolean canBuying() {

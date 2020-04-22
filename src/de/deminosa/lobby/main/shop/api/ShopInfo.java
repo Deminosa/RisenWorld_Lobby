@@ -29,8 +29,9 @@ public class ShopInfo {
 		@Override
 		public ItemStack getIcon() {
 			return new ItemBuilder(Material.SIGN)
-					.setName("§6Coins")
+					.setName("§6Bank")
 					.addLoreLine("§b" + Coins.getCoins(player) + " Coins")
+					.addLoreLine("§b" + Coins.getToken(player) + " Tokens")
 					.build();
 		}
 

@@ -14,7 +14,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
-import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.gui.GUI;
@@ -225,8 +224,8 @@ public class VillagerListener implements Listener{
 							public void onClick(InventoryClickEvent arg0) {
 								if(DayLoginHandler.isRewardAvabile(player)) {
 									DayLoginHandler.updateReward(player);
-									Coins.lottoAction(LottoAction.ADD, player.getBukkitPlayer(), 1);
-									player.sendMessage("Tagesbonus", "Du hast §a+1 Lottoschein§7 erhalten!");
+									Coins.tokenAction(CoinAction.ADD, player.getBukkitPlayer(), 1);
+									player.sendMessage("Tagesbonus", "Du hast §a+1 Token§7 erhalten!");
 									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
 									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
@@ -256,8 +255,8 @@ public class VillagerListener implements Listener{
 							public void onClick(InventoryClickEvent arg0) {
 								if(DayLoginHandler.isRewardAvabile(player)) {
 									DayLoginHandler.updateReward(player);
-									Coins.lottoAction(LottoAction.ADD, player.getBukkitPlayer(), 2);
-									player.sendMessage("Tagesbonus", "Du hast §a+2 Lottoscheine§7 erhalten!");
+									Coins.tokenAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
+									player.sendMessage("Tagesbonus", "Du hast §a+2 Tokens§7 erhalten!");
 									Coins.chestAction(CoinAction.ADD, player.getBukkitPlayer(), 2);
 									player.sendMessage("Tagesbonus", "Du hast §a+2 Chest§7 erhalten!");
 									player.getBukkitPlayer().closeInventory();
@@ -270,7 +269,7 @@ public class VillagerListener implements Listener{
 										.addLoreLine("§7Verfügbar: " + 
 												(DayLoginHandler.isRewardAvabile(player) ? "§aJa" : "§b" 
 												+ (Integer.valueOf(DayLoginHandler.getLastDay(player))+1) + "." + DateManager.getMonth()+"."))
-										.addLoreLine("§7Du erhälst: §b2 Lottoscheine")
+										.addLoreLine("§7Du erhälst: §b2 Tokens")
 										.addLoreLine("§7Du erhälst: §b2 Chest")
 										.build();
 							}

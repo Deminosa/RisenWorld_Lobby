@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -42,18 +43,18 @@ public class PetChicken implements ShopItemBuilder{
 		Chicken animal = (Chicken) entity;
 		animal.setBaby();
 		
-		PetUitls.followPlayer(player, entity, 1.75, "k", 1, 2);
+		PetUitls.followPlayer(player, entity, 1.75, "k", 5, 2);
 	}
 
 	@Override
 	public ItemStack getIcon(CorePlayer player) {
 		return new ItemBuilder(Material.MONSTER_EGG).setDurability((short)93)
 				.setName("§6Huhn")
-				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice())
+				.addLoreLine(ShopHandler.hasBought(ShopType.PET, player.getUUID(), this) ? "§aIm besitzt" : "§cNicht Kaufbar")
 				.addLoreLine("")
-				.addLoreLine("§7Fähigkeit: §6Sammelt Lottoscheine")
-				.addLoreLine("§7Chance: §b1%")
-				.addLoreLine("§7Max: §b2 Lottoscheine")
+				.addLoreLine("§7Fähigkeit: §6Sammelt Tokens")
+				.addLoreLine("§7Chance: §b5%")
+				.addLoreLine("§7Max: §b2 Tokens")
 				.build();
 	}
 
@@ -68,12 +69,12 @@ public class PetChicken implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
+	public boolean canBuying() {
+		return false;
 	}
 
 	@Override
-	public boolean canBuying() {
-		return true;
+	public EconomyType getEconomyType() {
+		return EconomyType.COINS;
 	}
 }

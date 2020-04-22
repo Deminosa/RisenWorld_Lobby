@@ -7,12 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
-import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.builders.CoreTimer;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.hologramm.Hologram;
@@ -121,21 +119,6 @@ public class TestTimer implements CoreTimer{
 					}.runTaskLater(RisenWorld_Lobby.getInstance(), 2*(ThreadLocalRandom.current().nextInt(5))+1);
 					
 					ToyCoinTNT.chest.remove(player);
-				}
-				
-				if(ToyCoinTNT.lotto.containsKey(player)) {
-					int lotto = ToyCoinTNT.lotto.get(player);
-					
-					CoreCache.getCorePlayer(player).sendMessage("Lotto", "Du hast §b+"+lotto+" Lottoscheine §7gesammelt!");
-					
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							Coins.lottoAction(LottoAction.ADD, player, lotto);
-						}
-					}.runTaskLater(RisenWorld_Lobby.getInstance(), 2*(ThreadLocalRandom.current().nextInt(5))+1);
-					
-					ToyCoinTNT.lotto.remove(player);
 				}
 			}
 		}

@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -22,7 +23,6 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 public class ShopArmorLether {
 
 	private static int uid = 100;
-	private static int move = 1;
 	
 	public static boolean hasAllLether(Player player) {
 		if(ShopHandler.hasBought(ShopType.ARMOR, player.getUniqueId(), new Helmet()) &&
@@ -68,10 +68,10 @@ public class ShopArmorLether {
 		public int getItemID() {return uid+1;}
 
 		@Override
-		public int getSlot() {return 0+move;}
+		public int getSlot() {return 0;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}
@@ -111,10 +111,10 @@ public class ShopArmorLether {
 		public int getItemID() {return uid+2;}
 
 		@Override
-		public int getSlot() {return 9+move;}
+		public int getSlot() {return 1;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}
@@ -154,10 +154,10 @@ public class ShopArmorLether {
 		public int getItemID() {return uid+3;}
 
 		@Override
-		public int getSlot() {return 18+move;}
+		public int getSlot() {return 2;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}
@@ -197,10 +197,10 @@ public class ShopArmorLether {
 		public int getItemID() {return uid+4;}
 
 		@Override
-		public int getSlot() {return 27+move;}
+		public int getSlot() {return 3;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}

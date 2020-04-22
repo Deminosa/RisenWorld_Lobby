@@ -16,6 +16,7 @@ public enum ShopType {
 	PET("Haustiere"),
 	SPECIAL("§6Ausergewöhnlich"),
 	MAGIC("§6Verwandlungszauber"),
+	HEAD("§6Köpfe"),
 	NONE("§6Shop");
 	
 	String invName;

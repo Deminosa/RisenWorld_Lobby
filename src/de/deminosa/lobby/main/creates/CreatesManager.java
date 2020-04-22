@@ -1,12 +1,6 @@
 package de.deminosa.lobby.main.creates;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,44 +15,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
-import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.gui.GUI;
 import de.deminosa.core.utils.gui.GUIButton;
-import de.deminosa.core.utils.hologramm.Hologram;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
-import de.deminosa.core.utils.mathmanager.CoreMath;
-import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.creates.builder.Creates;
-import de.deminosa.lobby.main.shop.ShopHandler;
-import de.deminosa.lobby.main.shop.Items.effecte.EffectFlame;
-import de.deminosa.lobby.main.shop.Items.effecte.EffectHerz;
-import de.deminosa.lobby.main.shop.Items.pets.PetChicken;
-import de.deminosa.lobby.main.shop.Items.pets.PetCow;
-import de.deminosa.lobby.main.shop.Items.pets.PetPig;
-import de.deminosa.lobby.main.shop.Items.pets.PetPilzkuh;
-import de.deminosa.lobby.main.shop.Items.pets.PetRabbit;
-import de.deminosa.lobby.main.shop.Items.pets.PetSheep;
-import de.deminosa.lobby.main.shop.Items.pets.PetWolf;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorChain;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorDiamond;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorGold;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorIron;
-import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLether;
-import de.deminosa.lobby.main.shop.Items.special.EffectBarierre;
-import de.deminosa.lobby.main.shop.Items.special.ShopArmorLetherRainbow;
-import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
-import de.deminosa.lobby.main.shop.Items.toy.ToyJumpStick;
-import de.deminosa.lobby.main.shop.Items.toy.ToyKnockBack;
-import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
-import de.deminosa.lobby.main.shop.api.ShopType;
 import de.deminosa.lobby.regedit.Toroku;
-import de.deminosa.lobby.utils.rocket.RocketBuilder;
 
 /*
  *	Class Create by Deminosa
@@ -109,35 +75,238 @@ public class CreatesManager implements Listener{
 		if(block != null && block.getType() == Material.ENCHANTMENT_TABLE) {
 			GUI gui = new GUI(CoreCache.getCorePlayer(event.getPlayer()), "§6Kisten spiel", InventoryType.HOPPER);
 
-			gui.setButton(0, new GUIButton() {
+			gui.setButton(1, new GUIButton() {
 				@Override
 				public void onClick(InventoryClickEvent e) {
 					if(e.getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-						if(Coins.hasEnoughChest(event.getPlayer(), 1)) {
-							if(!creats.containsValue(block.getLocation())) {
-								event.getPlayer().closeInventory();
-								Creates creates = new Creates(CoreCache.getCorePlayer(event.getPlayer()), block);
-								
-								creates.setJeckpot(0.2);
-								creates.setMagic(0.3);
-								creates.setSpezial(0.5);
-								creates.setArmor(1);
-								creates.setEffecte(1);
-								creates.setPet(1);
-								creates.setToy(1);
-								creates.setLotto(6);
-								creates.setCoins(39);
-								
-								Toroku.addEvent(creates);
-								
-								Coins.chestAction(CoinAction.REMOVE, event.getPlayer(), 1);
+						GUI chest = new GUI(getCorePlayer(), "§6Kiste Wählen", InventoryType.HOPPER);
+						
+						chest.setButton(0, new GUIButton() {
+							@Override
+							public void onClick(InventoryClickEvent arg0) {
+								if(Coins.hasEnoughChest(event.getPlayer(), 1)) {
+									if(!creats.containsValue(block.getLocation())) {
+										Coins.chestAction(CoinAction.REMOVE, event.getPlayer(), 1);
+										Creates c = new Creates(getCorePlayer(), block);
+										
+										c.setJeckpot(0.3);
+										c.setSpezial(0.7);
+										c.setArmor(4);
+										c.setEffecte(4);
+										c.setPet(4);
+										c.setToy(4);
+										c.setToken(5);
+										c.setCoins(50);
+										c.setMagic(4);
+										c.setHeads(4);
+										
+										Toroku.addEvent(c);
+									}
+								}
 							}
-						}
+							
+							@Override
+							public ItemStack getIcon() {
+								// > 50 §a
+								// > 10 §e
+								// < 10 §c 
+								return new ItemBuilder(Material.CHEST)
+										.setName("§6Standard Kiste")
+										.addLoreLine("§7Du hast §b" + Coins.getChest(getCorePlayer().getBukkitPlayer()) + "/1 §7Kisten")
+										.addLoreLine("")
+										.addLoreLine("§c500 Coins §b0.3%")
+										.addLoreLine("§aCoins §b50%")
+										.addLoreLine("§cToken §b5%")
+										.addLoreLine("§cAusergewöhnlich §b0.7%")
+										.addLoreLine("§cRüstung §b4%")
+										.addLoreLine("§cEffekte §b4%")
+										.addLoreLine("§cHaustiere §b4%")
+										.addLoreLine("§cSpielzeuge §b4%")
+										.addLoreLine("§cVerwandlungszauber §b4%")
+										.addLoreLine("§aNieten §b28%")
+										.addLoreLine("")
+										.build();
+							}
+						});
+						
+						chest.setButton(1, new GUIButton() {
+							@Override
+							public void onClick(InventoryClickEvent arg0) {
+								if(Coins.hasEnoughChest(event.getPlayer(), 5)) {
+									if(!creats.containsValue(block.getLocation())) {
+										Coins.chestAction(CoinAction.REMOVE, event.getPlayer(), 5);
+										Creates c = new Creates(getCorePlayer(), block);
+										
+										c.setJeckpot(1);
+										c.setSpezial(10);
+										c.setArmor(10);
+										c.setEffecte(10);
+										c.setPet(10);
+										c.setToy(10);
+										c.setToken(10);
+										c.setCoins(25);
+										c.setMagic(10);
+										c.setHeads(10);
+										
+										Toroku.addEvent(c);
+									}
+								}
+							}
+							
+							@Override
+							public ItemStack getIcon() {
+								// > 50 §a
+								// > 10 §e
+								// < 10 §c 
+								return new ItemBuilder(Material.CHEST)
+										.setName("§6Hans im Glück")
+										.addLoreLine("§7Du hast §b" + Coins.getChest(getCorePlayer().getBukkitPlayer()) + "/5 §7Kisten")
+										.addLoreLine("")
+										.addLoreLine("§c500 Coins §b1%")
+										.addLoreLine("§aCoins §b25%")
+										.addLoreLine("§eToken §b10%")
+										.addLoreLine("§eAusergewöhnlich §b10%")
+										.addLoreLine("§eRüstung §b10%")
+										.addLoreLine("§eEffekte §b10%")
+										.addLoreLine("§eHaustiere §b10%")
+										.addLoreLine("§eSpielzeuge §b10%")
+										.addLoreLine("§eVerwandlungszauber §b10%")
+										.addLoreLine("§cNieten §b4%")
+										.addLoreLine("")
+										.build();
+							}
+						});
+						
+						chest.setButton(3, new GUIButton() {
+							@Override
+							public void onClick(InventoryClickEvent arg0) {
+								if(Coins.hasEnoughToke(event.getPlayer(), 10)) {
+									if(!creats.containsValue(block.getLocation())) {
+										Coins.tokenAction(CoinAction.REMOVE, event.getPlayer(), 10);
+										Creates c = new Creates(getCorePlayer(), block);
+										
+										c.setJeckpot(0.1);
+										c.setSpezial(15);
+										c.setArmor(15);
+										c.setEffecte(15);
+										c.setPet(15);
+										c.setToy(15);
+										c.setToken(0.9);
+										c.setCoins(8);
+										c.setMagic(15);
+										c.setHeads(15);
+										
+										Toroku.addEvent(c);
+									}
+								}
+							}
+							
+							@Override
+							public ItemStack getIcon() {
+								// > 50 §a
+								// > 10 §e
+								// < 10 §c 
+								return new ItemBuilder(Material.ENDER_CHEST)
+										.setName("§6Der Shop gehört mir!")
+										.addLoreLine("§7Du hast §b" + Coins.getToken(getCorePlayer().getBukkitPlayer()) + "/10 §7Tokens")
+										.addLoreLine("")
+										.addLoreLine("§c500 Coins §b0.1%")
+										.addLoreLine("§cCoins §b8%")
+										.addLoreLine("§cToken §b0.9%")
+										.addLoreLine("§aAusergewöhnlich §b15%")
+										.addLoreLine("§aRüstung §b15%")
+										.addLoreLine("§aEffekte §b15%")
+										.addLoreLine("§aHaustiere §b15%")
+										.addLoreLine("§aSpielzeuge §b15%")
+										.addLoreLine("§aVerwandlungszauber §b15%")
+										.addLoreLine("§cNieten §b1%")
+										.addLoreLine("")
+										.build();
+							}
+						});
+						
+						chest.setButton(4, new GUIButton() {
+							@Override
+							public void onClick(InventoryClickEvent arg0) {
+								if(Coins.hasEnoughToke(event.getPlayer(), 15)) {
+									if(!creats.containsValue(block.getLocation())) {
+										Coins.tokenAction(CoinAction.REMOVE, event.getPlayer(), 15);
+										Creates c = new Creates(getCorePlayer(), block);
+										
+										c.setJeckpot(15);
+										c.setSpezial(2);
+										c.setArmor(2);
+										c.setEffecte(2);
+										c.setPet(2);
+										c.setToy(2);
+										c.setToken(3);
+										c.setCoins(60);
+										c.setMagic(2);
+										c.setHeads(2);
+										
+										Toroku.addEvent(c);
+									}
+								}
+							}
+							
+							@Override
+							public ItemStack getIcon() {
+								// > 50 §a
+								// > 10 §e
+								// < 10 §c 
+								return new ItemBuilder(Material.ENDER_CHEST)
+										.setName("§6Der Zocker")
+										.addLoreLine("§7Du hast §b" + Coins.getToken(getCorePlayer().getBukkitPlayer()) + "/15 §7Tokens")
+										.addLoreLine("")
+										.addLoreLine("§a500 Coins §b15%")
+										.addLoreLine("§aCoins §b50%")
+										.addLoreLine("§cToken §b4%")
+										.addLoreLine("§cAusergewöhnlich §b4%")
+										.addLoreLine("§cRüstung §b4%")
+										.addLoreLine("§cEffekte §b4%")
+										.addLoreLine("§cHaustiere §b4%")
+										.addLoreLine("§cSpielzeuge §b4%")
+										.addLoreLine("§cVerwandlungszauber §b4%")
+										.addLoreLine("§cNieten §b7%")
+										.addLoreLine("")
+										.build();
+							}
+						});
+						
+						chest.open();
 					}else {
 						GUI gui = new GUI(getCorePlayer(), "§6ChangeLog");
 
 						int i = 0;
 						gui.getInventory().setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL)
+								.setName("§6Update am: 20.04.2020")
+								.addLoreLine("§a- §7Lottoscheine")
+								.addLoreLine("§a+ §7Token")
+								.addLoreLine("§6! §7Änderungen am Chance")
+								.addLoreLine("§a+ §7Neue Kisten")
+								.addLoreLine("")
+								.addLoreLine("§8§m----------------")
+								.addLoreLine("§a+ §7Hinzugefügt")
+								.addLoreLine("§c- §7Entfernt")
+								.addLoreLine("§6! §7Veränderung")
+								.build());
+
+						i++;
+						
+						gui.getInventory().setItem(i, new ItemBuilder(Material.BOOK)
+								.setName("§6Update am: 19.04.2020")
+								.addLoreLine("§a+ §7Köpfe")
+								.addLoreLine("§6! §7Änderungen am Chance")
+								.addLoreLine("")
+								.addLoreLine("§8§m----------------")
+								.addLoreLine("§a+ §7Hinzugefügt")
+								.addLoreLine("§c- §7Entfernt")
+								.addLoreLine("§6! §7Veränderung")
+								.build());
+
+						i++;
+						
+						gui.getInventory().setItem(i, new ItemBuilder(Material.BOOK)
 								.setName("§6Update am: 12.04.2020")
 								.addLoreLine("§a+ §7Verwandlung")
 								.addLoreLine("§6! §7Änderungen am Chance")
@@ -253,26 +422,14 @@ public class CreatesManager implements Listener{
 				@Override
 				public ItemStack getIcon() {
 					return new ItemBuilder(Material.CHEST).setName("§6Kisten Öffnen")
-							.addLoreLine("§7Du hast §b"+Coins.getChest(event.getPlayer())+"/1 §7Kisten im besitz.")
-							.addLoreLine(" ")
-							.addLoreLine("§6Gewinne:")
-							.addLoreLine("§7500 Coins §b0.2%")
-							.addLoreLine("§7Verwandlung §b0.3%")
-							.addLoreLine("§7Ausergewöhnlich §b0.5%")
-							.addLoreLine("§7Rüstung §b1%")
-							.addLoreLine("§7Effekte §b1%")
-							.addLoreLine("§7Haustiere §b1%")
-							.addLoreLine("§7Spielzeug §b1%")
-							.addLoreLine("§7Lotto Scheine §b6%")
-							.addLoreLine("§7Coins §b39%")
-							.addLoreLine("§7Nieten §b50%")
+							.addLoreLine("§7Klicke hier um Kisten Zu Öffnen§b")
 							.addLoreLine(" ")
 							.addLoreLine("§eSchift + Linksklick §8>> §7Changelogs")
 							.build();
 				}
 			});
 
-			gui.setButton(2, new GUIButton() {
+			gui.setButton(3, new GUIButton() {
 				@Override
 				public void onClick(InventoryClickEvent arg0) {
 					GUI chest = new GUI(getCorePlayer(), "§6Kisten Kaufen", InventoryType.HOPPER);
@@ -399,51 +556,6 @@ public class CreatesManager implements Listener{
 							.setName("§6Kisten Kaufen")
 							.addLoreLine("§7Klicke um die Gewünschte")
 							.addLoreLine("§7menge zu kaufen.")
-							.build();
-				}
-			});
-			
-			gui.setButton(4, new GUIButton() {	
-				@Override
-				public void onClick(InventoryClickEvent arg0) {
-					if(Coins.hasEnoughChest(event.getPlayer(), 5)) {
-						if(!creats.containsValue(block.getLocation())) {
-							event.getPlayer().closeInventory();
-							Creates creates = new Creates(CoreCache.getCorePlayer(event.getPlayer()), block);
-							
-							creates.setJeckpot(1);
-							creates.setMagic(1);
-							creates.setSpezial(2);
-							creates.setArmor(3);
-							creates.setEffecte(3);
-							creates.setPet(3);
-							creates.setToy(3);
-							creates.setLotto(5);
-							creates.setCoins(100);
-							
-							Toroku.addEvent(creates);
-							
-							Coins.chestAction(CoinAction.REMOVE, event.getPlayer(), 5);
-						}
-					}
-				}
-				
-				@Override
-				public ItemStack getIcon() {
-					return new ItemBuilder(Material.ENDER_CHEST).setName("§6Kisten Öffnen")
-							.addLoreLine("§7Du hast §b"+Coins.getChest(event.getPlayer())+"/5 §7Kisten im besitz.")
-							.addLoreLine(" ")
-							.addLoreLine("§6Gewinne:")
-							.addLoreLine("§7500 Coins §b1%")
-							.addLoreLine("§7Verwandlung §b1%")
-							.addLoreLine("§7Ausergewöhnlich §b2%")
-							.addLoreLine("§7Rüstung §b3%")
-							.addLoreLine("§7Effekte §b3%")
-							.addLoreLine("§7Haustiere §b3%")
-							.addLoreLine("§7Spielzeug §b3%")
-							.addLoreLine("§7Lotto Scheine §b5%")
-							.addLoreLine("§7Coins §b79%")
-							.addLoreLine("§7Nieten §b0%")
 							.build();
 				}
 			});

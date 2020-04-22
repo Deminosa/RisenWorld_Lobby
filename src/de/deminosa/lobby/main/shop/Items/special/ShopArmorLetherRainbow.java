@@ -13,6 +13,7 @@ import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.shop.ShopHandler;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLether;
 import de.deminosa.lobby.main.shop.Items.ruestung.ShopArmorLetherRainbowTimer;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -31,7 +32,7 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 10000;
+		return 50;
 	}
 
 	@Override
@@ -91,9 +92,7 @@ public class ShopArmorLetherRainbow implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
-	}
+	public EconomyType getEconomyType() {return EconomyType.TOKENS;}
 	
 	@Override
 	public boolean canBuying() {return false;}

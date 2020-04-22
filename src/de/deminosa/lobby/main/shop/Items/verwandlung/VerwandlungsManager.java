@@ -4,15 +4,12 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.lobby.RisenWorld_Lobby;
-
-import net.minecraft.server.v1_8_R3.EntityInsentient;
 
 /*
 *	Class Create by Deminosa
@@ -30,7 +27,6 @@ public class VerwandlungsManager {
 	public static void follow(Player player, LivingEntity entity, double d) {
 		final LivingEntity e = entity;
 		final Player p = player;
-		final float f = (float) d;
 		
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20*9999, 1), true);
 		

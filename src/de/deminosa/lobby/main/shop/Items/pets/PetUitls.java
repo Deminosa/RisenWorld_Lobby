@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.deminosa.coinmanager.Coins;
 import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
-import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.cache.CoreCache;
 import de.deminosa.core.utils.gui.GUI;
 import de.deminosa.core.utils.gui.GUIButton;
@@ -72,8 +71,8 @@ public class PetUitls implements Listener{
 								Coins.action(CoinAction.ADD, event.getPlayer(), 5);
 							}else if(r == 1){
 								CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.LEVEL_UP);
-								CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Lottoschein(e) §7gefunden");
-								Coins.lottoAction(LottoAction.ADD, event.getPlayer(), 1);
+								CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Token(s) §7gefunden");
+								Coins.tokenAction(CoinAction.ADD, event.getPlayer(), 1);
 							}else {
 								CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.LEVEL_UP);
 								CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Kiste §7gefunden");
@@ -108,8 +107,8 @@ public class PetUitls implements Listener{
 										Coins.action(CoinAction.ADD, event.getPlayer(), 5);
 									}else if(r == 1){
 										CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.LEVEL_UP);
-										CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Lottoschein(e) §7gefunden");
-										Coins.lottoAction(LottoAction.ADD, event.getPlayer(), 1);
+										CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Token(s) §7gefunden");
+										Coins.tokenAction(CoinAction.ADD, event.getPlayer(), 1);
 									}else {
 										CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.LEVEL_UP);
 										CoreCache.getCorePlayer(event.getPlayer()).sendMessage("Haustier", "Dein Haustier hat §6" + 1 + " Kiste §7gefunden");
@@ -185,7 +184,7 @@ public class PetUitls implements Listener{
 						if(CoreMath.chance(15)) {
 							CoreCache.getCorePlayer(p).playsound(Sound.LEVEL_UP);
 							CoreCache.getCorePlayer(p).sendMessage("Haustier", "Dein Haustier hat §6" + v + " Lottoschein(e) §7gefunden");
-							Coins.lottoAction(LottoAction.ADD, player, v);
+							Coins.tokenAction(CoinAction.ADD, player, v);
 						}else if(CoreMath.chance(25)){
 							CoreCache.getCorePlayer(p).sendMessage("Haustier", "Dein Haustier möchte Aufmerksamkeit!");
 							if(!petCaress.contains(e.getUniqueId().toString())) {

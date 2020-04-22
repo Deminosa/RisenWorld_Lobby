@@ -1,7 +1,6 @@
 package de.deminosa.lobby.main.shop.Items.verwandlung;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -10,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -25,7 +25,7 @@ public class VerwandlungCow implements ShopItemBuilder{
 
 	@Override
 	public int getPrice() {
-		return 15850;
+		return 200;
 	}
 
 	@Override
@@ -36,8 +36,7 @@ public class VerwandlungCow implements ShopItemBuilder{
 	@Override
 	public void getAction(Player player) {
 		LivingEntity entity = player.getWorld().spawn(player.getLocation(), Cow.class);
-//		entity.setCustomNameVisible(true);
-//		entity.setCustomName("§6"+player.getPlayerListName());
+		VerwandlungsManager.stopFollow(player);
 		
 		VerwandlungsManager.follow(player, entity, 2.5d);
 	}
@@ -47,7 +46,7 @@ public class VerwandlungCow implements ShopItemBuilder{
 		return new ItemBuilder(Material.MONSTER_EGG).setDurability((short)92)
 				.setName("§6"+getItemName())
 				.addLoreLine("")
-				.addLoreLine(ShopHandler.hasBought(ShopType.MAGIC, player.getUUID(), this) ? "§aIm besitzt" : "§cNicht Kaufbar")
+				.addLoreLine(ShopHandler.hasBought(ShopType.MAGIC, player.getUUID(), this) ? "§aIm besitzt" : "§6Preis: §b" + getPrice() + " tokens")
 				.build();
 	}
 
@@ -62,13 +61,11 @@ public class VerwandlungCow implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
-	}
+	public EconomyType getEconomyType() {return EconomyType.TOKENS;}
 
 	@Override
 	public boolean canBuying() {
-		return false;
+		return true;
 	}
 
 }

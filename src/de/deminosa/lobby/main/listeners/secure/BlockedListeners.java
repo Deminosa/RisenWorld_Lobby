@@ -1,11 +1,15 @@
 package de.deminosa.lobby.main.listeners.secure;
 
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -13,20 +17,16 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.deminosa.coinmanager.Coins;
-import de.deminosa.coinmanager.command.CoinsCommand.CoinAction;
-import de.deminosa.coinmanager.command.LottoCommand.LottoAction;
 import de.deminosa.core.cache.CoreCache;
-import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
 
@@ -40,6 +40,37 @@ import de.deminosa.lobby.main.shop.Items.special.ToyCoinTNT;
 
 public class BlockedListeners implements Listener{
 
+	private HashMap<Player, Integer> wait = new HashMap<>();
+	
+	private boolean isWaiting(Player player) {
+		return wait.containsKey(player);
+	}
+	
+	private void setWaiting(Player player, int sec) {
+		int time = (int) (System.currentTimeMillis()/1000)+sec;
+		wait.put(player, time);
+	}
+	
+	private boolean isTimerNotEnd(Player player) {
+		int currentTime = (int) (System.currentTimeMillis()/1000);
+		int timer = wait.get(player) - currentTime;
+		if(timer >= 1) {
+			return true;
+		}else {
+			removeWaiting(player);
+			return false;
+		}
+	}
+	
+	private void removeWaiting(Player player) {
+		wait.remove(player);
+	}
+	
+	@EventHandler
+	private void onEggland() {
+		
+	}
+	
 	@EventHandler
 	public void onWeatherChangeEvent(WeatherChangeEvent event) {
 		new BukkitRunnable() {
@@ -58,12 +89,74 @@ public class BlockedListeners implements Listener{
 	
 	@EventHandler
 	public void onInteractEvent(PlayerInteractEvent event) {
-		event.setCancelled(true);
+		if(event.getClickedBlock() != null) {
+			if(event.getItem() != null && event.getItem().getType() == Material.TNT) {
+				event.setCancelled(false);
+			}else {
+				event.setCancelled(true);
+			}
+		}else {
+			event.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent event) {
-		event.setCancelled(true);
+//		Player p = event.getPlayer();
+		Block b = event.getBlock();
+		
+		if(b.getType() == Material.TNT) {
+			if(!isWaiting(event.getPlayer())) {
+				setWaiting(event.getPlayer(), 30);
+				b.setType(Material.AIR);
+				b.getWorld().spawn(b.getLocation(), TNTPrimed.class).setFuseTicks(20*5);
+			}else {
+				if(isTimerNotEnd(event.getPlayer())) {
+					CoreCache.getCorePlayer(event.getPlayer()).sendMessage("AC", "Bitte warte...");
+				}else {
+					CoreCache.getCorePlayer(event.getPlayer()).sendMessage("AC", "Bitte erneut versuchen...");
+				}
+			}
+			event.setCancelled(true);
+		}else {
+			event.setCancelled(true);
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void onExplode(EntityExplodeEvent event) {
+		HashMap<Location, Material> blocks = new HashMap<>();
+		HashMap<Location, Byte> subid = new HashMap<>();
+		for(Block b : event.blockList()) {
+			if(b.getType() != Material.BARRIER && b.getType() != Material.ENDER_PORTAL_FRAME &&
+					b.getType() != Material.SIGN_POST && b.getType() != Material.SIGN &&
+					b.getType() != Material.WOOD_DOOR && b.getType() != Material.FLOWER_POT) {
+				blocks.put(b.getLocation(), b.getType());
+				subid.put(b.getLocation(), b.getData());
+			}
+		}
+		event.blockList().clear();
+		for(Location l : blocks.keySet()) {
+			l.getBlock().setType(Material.BARRIER);
+		}
+		
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				int i = 1;
+				for(Location l : blocks.keySet()) {
+					i++;
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							l.getBlock().setType(blocks.get(l));
+							l.getBlock().setData(subid.get(l));
+						}
+					}.runTaskLater(RisenWorld_Lobby.getInstance(), 2*i);
+				}
+			}
+		}.runTaskLater(RisenWorld_Lobby.getInstance(), 20*10);
 	}
 	
 	@EventHandler
@@ -78,6 +171,8 @@ public class BlockedListeners implements Listener{
 	
 	@EventHandler
 	public void onPickup(PlayerPickupItemEvent event) {
+		event.getItem().remove();
+		event.setCancelled(true);
 		if(event.getItem().getType() == EntityType.DROPPED_ITEM) {
 			for(String name : ToyCoinTNT.CoinUUID) {
 				if(event.getItem().getUniqueId().toString().equals(name)) {
@@ -89,8 +184,6 @@ public class BlockedListeners implements Listener{
 					}
 					
 					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
-				}else {
-					event.setCancelled(true);
 				}
 			}
 			for(String name : ToyCoinTNT.LottoUUID) {
@@ -103,8 +196,6 @@ public class BlockedListeners implements Listener{
 					}
 					
 					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
-				}else {
-					event.setCancelled(true);
 				}
 			}
 			for(String name : ToyCoinTNT.ChestUUID) {
@@ -117,13 +208,8 @@ public class BlockedListeners implements Listener{
 					}
 					
 					CoreCache.getCorePlayer(event.getPlayer()).playsound(Sound.ORB_PICKUP);
-				}else {
-					event.setCancelled(true);
 				}
 			}
-			event.getItem().remove();
-		}else {
-			event.setCancelled(true);
 		}
 	}
 	
@@ -140,6 +226,7 @@ public class BlockedListeners implements Listener{
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
 		if(event.getEntityType() != EntityType.PLAYER) return;
+		if(event.getDamager().getType() == EntityType.PRIMED_TNT) return;
 		
 		Player Damager = (Player)event.getDamager();
 		Player getDamage = (Player)event.getEntity();

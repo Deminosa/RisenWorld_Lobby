@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 import de.deminosa.lobby.utils.Utils;
@@ -68,9 +69,7 @@ public class ToyKnockBack implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
-	}
+	public EconomyType getEconomyType() {return EconomyType.COINS;}
 	
 	@Override
 	public boolean canBuying() {return true;}

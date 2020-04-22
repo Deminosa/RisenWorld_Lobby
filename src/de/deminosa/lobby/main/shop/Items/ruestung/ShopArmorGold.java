@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -22,7 +23,6 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 public class ShopArmorGold {
 
 	private static int uid = 300;
-	private static int move = 2;
 	
 	public static class Helmet implements ShopItemBuilder{
 
@@ -58,10 +58,10 @@ public class ShopArmorGold {
 		public int getItemID() {return uid+1;}
 
 		@Override
-		public int getSlot() {return 0+move;}
+		public int getSlot() {return 5;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 	
 		@Override
 		public boolean canBuying() {return true;}
@@ -101,10 +101,10 @@ public class ShopArmorGold {
 		public int getItemID() {return uid+2;}
 
 		@Override
-		public int getSlot() {return 9+move;}
+		public int getSlot() {return 6;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}
@@ -144,10 +144,10 @@ public class ShopArmorGold {
 		public int getItemID() {return uid+3;}
 
 		@Override
-		public int getSlot() {return 18+move;}
+		public int getSlot() {return 7;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}
@@ -187,10 +187,10 @@ public class ShopArmorGold {
 		public int getItemID() {return uid+4;}
 
 		@Override
-		public int getSlot() {return 27+move;}
+		public int getSlot() {return 8;}
 
 		@Override
-		public int getItemLevel() {return 0;}
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 		@Override
 		public boolean canBuying() {return true;}

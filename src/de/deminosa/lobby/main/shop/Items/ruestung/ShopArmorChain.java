@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import de.deminosa.core.builders.CorePlayer;
 import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 
@@ -22,7 +23,6 @@ import de.deminosa.lobby.main.shop.api.ShopType;
 public class ShopArmorChain {
 
 	private static int uid = 500;
-	private static int move = 4;
 	
 	public static class Helmet implements ShopItemBuilder{
 
@@ -58,13 +58,13 @@ public class ShopArmorChain {
 		public int getItemID() {return uid+1;}
 
 		@Override
-		public int getSlot() {return 0+move;}
-
-		@Override
-		public int getItemLevel() {return 0;}
+		public int getSlot() {return 23;}
 		
 		@Override
 		public boolean canBuying() {return true;}
+
+		@Override
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 		
 	}
 	
@@ -102,13 +102,13 @@ public class ShopArmorChain {
 		public int getItemID() {return uid+2;}
 
 		@Override
-		public int getSlot() {return 9+move;}
-
-		@Override
-		public int getItemLevel() {return 0;}
+		public int getSlot() {return 24;}
 		
 		@Override
 		public boolean canBuying() {return true;}
+
+		@Override
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 	}
 	
 	public static class Leggins implements ShopItemBuilder{
@@ -145,13 +145,13 @@ public class ShopArmorChain {
 		public int getItemID() {return uid+3;}
 
 		@Override
-		public int getSlot() {return 18+move;}
-
-		@Override
-		public int getItemLevel() {return 0;}
+		public int getSlot() {return 25;}
 		
 		@Override
 		public boolean canBuying() {return true;}
+
+		@Override
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 	}
 	
 	public static class Boots implements ShopItemBuilder{
@@ -188,13 +188,13 @@ public class ShopArmorChain {
 		public int getItemID() {return uid+4;}
 
 		@Override
-		public int getSlot() {return 27+move;}
-
-		@Override
-		public int getItemLevel() {return 0;}
+		public int getSlot() {return 26;}
 		
 		@Override
 		public boolean canBuying() {return true;}
+
+		@Override
+		public EconomyType getEconomyType() {return EconomyType.COINS;}
 	}
 	
 }

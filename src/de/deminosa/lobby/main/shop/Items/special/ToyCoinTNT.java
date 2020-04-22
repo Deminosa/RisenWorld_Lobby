@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +18,7 @@ import de.deminosa.core.utils.itembuilder.ItemBuilder;
 import de.deminosa.core.utils.mathmanager.CoreMath;
 import de.deminosa.lobby.RisenWorld_Lobby;
 import de.deminosa.lobby.main.shop.ShopHandler;
+import de.deminosa.lobby.main.shop.api.EconomyType;
 import de.deminosa.lobby.main.shop.api.ShopItemBuilder;
 import de.deminosa.lobby.main.shop.api.ShopType;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -46,7 +46,7 @@ public class ToyCoinTNT implements ShopItemBuilder{
 	
 	@Override
 	public int getPrice() {
-		return 500;
+		return 10;
 	}
 
 	@Override
@@ -104,9 +104,7 @@ public class ToyCoinTNT implements ShopItemBuilder{
 	}
 
 	@Override
-	public int getItemLevel() {
-		return 0;
-	}
+	public EconomyType getEconomyType() {return EconomyType.TOKENS;}
 
 	@Override
 	public boolean canBuying() {
