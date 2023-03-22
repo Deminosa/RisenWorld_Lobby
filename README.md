@@ -6,3 +6,5 @@ It has:
 - Creates (it's like Lootbox) 
 - Shop 
 - Pets
+- Daily Login Streak
+- Advancement 
